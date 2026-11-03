@@ -1,12 +1,9 @@
 {
   "name": "Regina Adelisa",
   "headline": "Data Analyst & Statistika",
-  "education": "S1 Statistika, Universitas Bengkulu",
-  "intro": "",
+  "education": "Lulusan S-1 Statistika Universitas Bengkulu",
   "bio": "Mahasiswa Statistika Universitas Bengkulu yang memiliki minat kuat di bidang analisis data, ilmu data, dan pengembangan akademik. Berpengalaman dalam pemodelan statistika, analisis data, serta pengembangan solusi berbasis data.",
   "tagline": "Turning data into meaningful insights.",
-  "photo": "",
-  "cv": "",
   "interests": [
     "Data Analysis",
     "Data Science",
@@ -15,7 +12,6 @@
     "Academic Research"
   ],
   "button_primary_label": "Unduh CV",
-  "button_primary_link": "",
   "button_secondary_label": "Hubungi Saya",
   "button_secondary_link": "#kontak"
 }
