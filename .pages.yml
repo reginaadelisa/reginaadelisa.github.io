@@ -1,49 +1,49 @@
 media:
-  - label: "Foto Profil"
+  - name: "profile"
+    label: "Foto Profil"
     input: "assets/images/profile"
     output: "assets/images/profile"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/profile"
-  - label: "Gambar Proyek"
+  - name: "project-images"
+    label: "Gambar Proyek"
     input: "assets/images/projects"
     output: "assets/images/projects"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/projects"
-  - label: "Gambar Pengalaman Kerja"
+  - name: "work-images"
+    label: "Gambar Pengalaman Kerja"
     input: "assets/images/work"
     output: "assets/images/work"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/work"
-  - label: "Gambar Organisasi"
+  - name: "organization-images"
+    label: "Gambar Organisasi"
     input: "assets/images/organizations"
     output: "assets/images/organizations"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/organizations"
-  - label: "Gambar Prestasi"
+  - name: "achievement-images"
+    label: "Gambar Prestasi"
     input: "assets/images/achievements"
     output: "assets/images/achievements"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/achievements"
-  - label: "Gambar Publikasi / Riset"
+  - name: "publication-images"
+    label: "Gambar Publikasi / Riset"
     input: "assets/images/publications"
     output: "assets/images/publications"
     extensions: ["jpg", "jpeg", "png", "webp"]
-    public_path: "assets/images/publications"
-  - label: "Foto Sertifikat"
+  - name: "certificate-images"
+    label: "Foto Sertifikat"
     input: "assets/certificates"
     output: "assets/certificates"
-    extensions: ["jpg", "jpeg", "png", "webp", "pdf"]
-    public_path: "assets/certificates"
-  - label: "Dokumen (CV, PDF)"
+    extensions: ["jpg", "jpeg", "png", "webp"]
+  - name: "documents"
+    label: "Dokumen (CV, PDF)"
     input: "assets/documents"
     output: "assets/documents"
     extensions: ["pdf", "doc", "docx"]
-    public_path: "assets/documents"
-  - label: "Gambar Umum"
+  - name: "general-images"
+    label: "Gambar Umum"
     input: "assets/images"
     output: "assets/images"
     extensions: ["jpg", "jpeg", "png", "webp", "gif", "svg"]
-    public_path: "assets/images"
 
 content:
   - name: "profil"
@@ -73,9 +73,14 @@ content:
       - name: "photo"
         label: "Foto Profil"
         type: "image"
+        options:
+          media: "profile"
       - name: "cv"
         label: "File CV (PDF)"
         type: "file"
+        options:
+          media: "documents"
+          extensions: ["pdf"]
       - name: "interests"
         label: "Minat & Bidang Profesional"
         type: "string"
@@ -145,6 +150,8 @@ content:
               - name: "logo"
                 label: "Logo (gambar, opsional)"
                 type: "image"
+                options:
+                  media: "general-images"
               - name: "description"
                 label: "Deskripsi Singkat"
                 type: "string"
@@ -199,7 +206,9 @@ content:
           - name: "photos"
             label: "Galeri Foto Dokumentasi"
             type: "image"
-            list: true
+            options:
+              media: "work-images"
+              multiple: {}
 
   - name: "pengalaman-organisasi"
     label: "Pengalaman Organisasi"
@@ -237,7 +246,9 @@ content:
           - name: "photos"
             label: "Galeri Foto Dokumentasi"
             type: "image"
-            list: true
+            options:
+              media: "organization-images"
+              multiple: {}
 
   - name: "projects"
     label: "Projects"
@@ -278,10 +289,14 @@ content:
           - name: "thumbnail"
             label: "Thumbnail Proyek"
             type: "image"
+            options:
+              media: "project-images"
           - name: "photos"
             label: "Galeri Screenshot / Foto Proyek"
             type: "image"
-            list: true
+            options:
+              media: "project-images"
+              multiple: {}
           - name: "status"
             label: "Status Proyek"
             type: "string"
@@ -322,6 +337,9 @@ content:
               - name: "pdf"
                 label: "File PDF / Laporan"
                 type: "file"
+                options:
+                  media: "documents"
+                  extensions: ["pdf"]
 
   - name: "sertifikasi"
     label: "Sertifikasi"
@@ -355,9 +373,14 @@ content:
           - name: "photo"
             label: "Foto Sertifikat"
             type: "image"
+            options:
+              media: "certificate-images"
           - name: "pdf"
             label: "File PDF Sertifikat"
             type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
 
   - name: "pelatihan"
     label: "Pelatihan"
@@ -392,12 +415,19 @@ content:
           - name: "photo"
             label: "Foto Dokumentasi Pelatihan"
             type: "image"
+            options:
+              media: "general-images"
           - name: "certificate_photo"
             label: "Foto Sertifikat Pelatihan"
             type: "image"
+            options:
+              media: "certificate-images"
           - name: "certificate_pdf"
             label: "File PDF Sertifikat"
             type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
 
   - name: "prestasi"
     label: "Prestasi"
@@ -428,9 +458,14 @@ content:
           - name: "photo"
             label: "Foto Dokumentasi"
             type: "image"
+            options:
+              media: "achievement-images"
           - name: "certificate"
             label: "File Sertifikat"
             type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
 
   - name: "publikasi"
     label: "Riset & Publikasi Ilmiah"
@@ -476,13 +511,20 @@ content:
           - name: "pdf"
             label: "File PDF"
             type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
           - name: "poster"
             label: "Poster Penelitian"
             type: "image"
+            options:
+              media: "publication-images"
           - name: "youtube"
             label: "URL Video YouTube"
             type: "string"
           - name: "photos"
             label: "Galeri Foto / Dokumentasi Penelitian"
             type: "image"
-            list: true
+            options:
+              media: "publication-images"
+              multiple: {}
