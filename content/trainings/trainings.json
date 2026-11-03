@@ -1,0 +1,17 @@
+{
+  "trainings": [
+    {
+      "name": "[Nama Pelatihan — isi melalui Pages CMS]",
+      "organizer": "[Penyelenggara — isi melalui Pages CMS]",
+      "period_start": "[Tahun/Tanggal Mulai]",
+      "period_end": "[Tahun/Tanggal Selesai]",
+      "description": "[Deskripsi pelatihan — isi melalui Pages CMS]",
+      "topics": [
+        "[Materi/topik 1 — isi melalui Pages CMS]"
+      ],
+      "photo": "",
+      "certificate_photo": "",
+      "certificate_pdf": ""
+    }
+  ]
+}

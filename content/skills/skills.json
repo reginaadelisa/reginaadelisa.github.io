@@ -1,0 +1,37 @@
+{
+  "hard_skills": [
+    {
+      "category": "Programming & Data Tools",
+      "items": [
+        { "name": "R", "logo": "", "description": "Analisis statistika, pemodelan, dan visualisasi data." },
+        { "name": "Python", "logo": "", "description": "Data processing, machine learning, dan scripting." },
+        { "name": "SQL", "logo": "", "description": "Query dan manajemen basis data relasional." },
+        { "name": "Microsoft Excel", "logo": "", "description": "Analisis data, pivot table, dan formula lanjutan." },
+        { "name": "Pandas", "logo": "", "description": "Manipulasi dan analisis data dengan Python." }
+      ]
+    },
+    {
+      "category": "Analytical Competencies",
+      "items": [
+        { "name": "Data Analysis", "logo": "", "description": "Mengolah dan menginterpretasikan data untuk menghasilkan insight." },
+        { "name": "Statistical Modeling", "logo": "", "description": "Pemodelan regresi, spasial, dan inferensial." },
+        { "name": "Data Visualization", "logo": "", "description": "Menyajikan data secara visual menggunakan Tableau, Looker Studio, dan ggplot2." },
+        { "name": "Machine Learning", "logo": "", "description": "Supervised dan unsupervised learning." },
+        { "name": "Data Processing", "logo": "", "description": "Pembersihan, transformasi, dan eksplorasi data." }
+      ]
+    },
+    {
+      "category": "AI & Development Tools",
+      "items": [
+        { "name": "Langflow", "logo": "", "description": "Pembangunan pipeline RAG dan AI berbasis visual." },
+        { "name": "GitHub", "logo": "", "description": "Version control dan kolaborasi kode." },
+        { "name": "Google Colab", "logo": "", "description": "Komputasi berbasis cloud dengan notebook Python." },
+        { "name": "Canva", "logo": "", "description": "Desain grafis, poster, dan presentasi." }
+      ]
+    }
+  ],
+  "soft_skills": [
+    { "name": "[Soft Skill 1 — isi melalui Pages CMS]", "description": "[Deskripsi — isi melalui Pages CMS]" },
+    { "name": "[Soft Skill 2 — isi melalui Pages CMS]", "description": "[Deskripsi — isi melalui Pages CMS]" }
+  ]
+}

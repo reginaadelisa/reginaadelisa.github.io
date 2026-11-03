@@ -1,0 +1,110 @@
+{
+  "projects": [
+    {
+      "title": "GWNR: Pemodelan Geographically Weighted Nonparametric Regression dengan Pendekatan Penalized Spline pada Kemiskinan Wilayah Sumatra Tahun 2024",
+      "category": "Statistical Modeling",
+      "description": "Penelitian pemodelan spasial menggunakan metode GWNR dengan pendekatan Penalized Spline untuk menganalisis faktor kemiskinan di wilayah Sumatra.",
+      "background": "Kemiskinan di Sumatra bersifat spasial — faktor penyebabnya berbeda antar wilayah. Penelitian ini bertujuan memodelkan kemiskinan secara lokal dengan mempertimbangkan heterogenitas spasial.",
+      "methodology": "Menggunakan metode Geographically Weighted Nonparametric Regression (GWNR) dengan pendekatan Penalized Spline. Data dianalisis menggunakan software R.",
+      "results": "[Hasil penelitian — isi melalui Pages CMS]",
+      "tools": ["R", "Statistika Spasial", "Penalized Spline"],
+      "role": "Peneliti Utama",
+      "thumbnail": "",
+      "photos": [],
+      "media": {
+        "github": "",
+        "pdf": "",
+        "youtube": "",
+        "colab": "",
+        "external": "",
+        "tableau": "",
+        "looker": ""
+      },
+      "status": "Selesai"
+    },
+    {
+      "title": "Sales Dashboard",
+      "category": "Data Visualization",
+      "description": "Pembuatan dashboard penjualan interaktif untuk memvisualisasikan performa bisnis dan tren penjualan.",
+      "background": "[Latar belakang — isi melalui Pages CMS]",
+      "methodology": "[Proses pengerjaan — isi melalui Pages CMS]",
+      "results": "[Hasil — isi melalui Pages CMS]",
+      "tools": ["[Tools — isi melalui Pages CMS]"],
+      "role": "[Peran — isi melalui Pages CMS]",
+      "thumbnail": "",
+      "photos": [],
+      "media": {
+        "github": "",
+        "pdf": "",
+        "youtube": "",
+        "colab": "",
+        "external": "",
+        "tableau": "",
+        "looker": ""
+      },
+      "status": "Selesai"
+    },
+    {
+      "title": "Play Store Analysis and Dashboard",
+      "category": "Data Analysis",
+      "description": "Analisis data aplikasi Google Play Store dan pembuatan dashboard interaktif.",
+      "background": "[Latar belakang — isi melalui Pages CMS]",
+      "methodology": "[Proses pengerjaan — isi melalui Pages CMS]",
+      "results": "[Hasil — isi melalui Pages CMS]",
+      "tools": ["Python", "Pandas", "[Tools lain — isi melalui Pages CMS]"],
+      "role": "[Peran — isi melalui Pages CMS]",
+      "thumbnail": "",
+      "photos": [],
+      "media": {
+        "github": "",
+        "pdf": "",
+        "youtube": "",
+        "colab": "",
+        "kaggle": "",
+        "external": ""
+      },
+      "status": "Selesai"
+    },
+    {
+      "title": "GitHire – Sistem Rekrutmen Berbasis Data",
+      "category": "Data Analysis & Research",
+      "description": "Proyek finalis PIDI DIGDAYA x Hackathon BI 2026. Sistem rekrutmen rule-based scoring.",
+      "background": "Proses rekrutmen konvensional rentan terhadap bias subjektif. GitHire hadir sebagai solusi berbasis data untuk mencocokkan kandidat secara lebih objektif.",
+      "methodology": "Menggunakan rule-based scoring untuk mengevaluasi kandidat berdasarkan kriteria terukur.",
+      "results": "[Hasil — isi melalui Pages CMS]",
+      "tools": ["Rule-Based Scoring", "[Tools lain — isi melalui Pages CMS]"],
+      "role": "Data Analyst & Researcher",
+      "team_id": "S1213",
+      "thumbnail": "",
+      "photos": [],
+      "media": {
+        "github": "",
+        "pdf": "",
+        "youtube": "",
+        "external": ""
+      },
+      "achievement": "Finalis PIDI DIGDAYA x Hackathon BI 2026",
+      "status": "Selesai"
+    },
+    {
+      "title": "RAG Telecom Knowledge Assistant",
+      "category": "AI & NLP",
+      "description": "Asisten pengetahuan berbasis Retrieval-Augmented Generation (RAG) untuk domain telekomunikasi menggunakan Langflow.",
+      "background": "[Latar belakang — isi melalui Pages CMS]",
+      "methodology": "[Proses pengerjaan — isi melalui Pages CMS]",
+      "results": "[Hasil — isi melalui Pages CMS]",
+      "tools": ["Langflow", "RAG", "[Tools lain — isi melalui Pages CMS]"],
+      "role": "[Peran — isi melalui Pages CMS]",
+      "thumbnail": "",
+      "photos": [],
+      "media": {
+        "github": "",
+        "pdf": "",
+        "youtube": "",
+        "huggingface": "",
+        "external": ""
+      },
+      "status": "Selesai"
+    }
+  ]
+}

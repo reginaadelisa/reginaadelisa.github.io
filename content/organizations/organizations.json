@@ -1,0 +1,16 @@
+{
+  "organizations": [
+    {
+      "organization": "[Nama Organisasi — isi melalui Pages CMS]",
+      "position": "[Jabatan/Posisi — isi melalui Pages CMS]",
+      "period_start": "[Tahun Mulai]",
+      "period_end": "[Tahun Selesai]",
+      "description": "[Deskripsi kegiatan organisasi — isi melalui Pages CMS]",
+      "responsibilities": [
+        "[Tanggung jawab 1 — isi melalui Pages CMS]"
+      ],
+      "contributions": "[Kontribusi dan pencapaian — isi melalui Pages CMS]",
+      "photos": []
+    }
+  ]
+}

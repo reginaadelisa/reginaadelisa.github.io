@@ -1,0 +1,32 @@
+{
+  "experiences": [
+    {
+      "position": "Asisten Praktikum Komputasi Statistika",
+      "institution": "Universitas Bengkulu",
+      "department": "Program Studi Statistika",
+      "period_start": "2024",
+      "period_end": "sekarang",
+      "description": "Mendampingi mahasiswa dalam praktikum mata kuliah Komputasi Statistika menggunakan software R.",
+      "responsibilities": [
+        "Membimbing mahasiswa dalam penggunaan software R untuk analisis data statistika.",
+        "Mempersiapkan materi dan modul praktikum.",
+        "Mengevaluasi dan mengoreksi laporan praktikum mahasiswa."
+      ],
+      "contributions": "",
+      "photos": []
+    },
+    {
+      "position": "[Posisi — isi melalui Pages CMS]",
+      "institution": "[Nama Institusi — isi melalui Pages CMS]",
+      "department": "[Nama Departemen — isi melalui Pages CMS]",
+      "period_start": "[Tahun Mulai]",
+      "period_end": "[Tahun Selesai]",
+      "description": "[Deskripsi pekerjaan — isi melalui Pages CMS]",
+      "responsibilities": [
+        "[Tanggung jawab 1 — isi melalui Pages CMS]"
+      ],
+      "contributions": "[Kontribusi — isi melalui Pages CMS]",
+      "photos": []
+    }
+  ]
+}
