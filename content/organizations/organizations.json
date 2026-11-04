@@ -1,16 +1,67 @@
 {
   "organizations": [
     {
-      "organization": "[Nama Organisasi — isi melalui Pages CMS]",
-      "position": "[Jabatan/Posisi — isi melalui Pages CMS]",
-      "period_start": "[Tahun Mulai]",
-      "period_end": "[Tahun Selesai]",
-      "description": "[Deskripsi kegiatan organisasi — isi melalui Pages CMS]",
+      "organization": "GenBI Universitas Bengkulu",
+      "position": "Anggota Bidang Pendidikan dan Kebudayaan",
+      "period_start": "Oktober 2025",
+      "period_end": "April 2026",
+      "description": "Sebagai penerima Beasiswa Bank Indonesia, tergabung dalam Generasi Baru Indonesia (GenBI) Komisariat Universitas Bengkulu sebagai anggota Bidang Pendidikan dan Kebudayaan. Terlibat dalam berbagai kegiatan edukasi, pengembangan masyarakat, dan pemberdayaan ekonomi, serta mewakili GenBI UNIB dalam kompetisi inovasi tingkat nasional PIDI DIGDAYA x Hackathon 2026.",
       "responsibilities": [
-        "[Tanggung jawab 1 — isi melalui Pages CMS]"
+        "Berpartisipasi dalam perencanaan dan pelaksanaan program kerja Bidang Pendidikan dan Kebudayaan.",
+        "Mewakili GenBI UNIB dalam kompetisi nasional PIDI DIGDAYA x Hackathon 2026.",
+        "Menjalankan tugas sebagai Bendahara kegiatan Sinergi Inklusi dan Edukasi Bersama Difabel (EDUSSI), termasuk mengelola anggaran, pencatatan transaksi, dan alur kas kegiatan.",
+        "Menyampaikan edukasi Cinta, Bangga, Paham (CBP) Rupiah kepada anak-anak difabel di SLB Amal Mulia Kota Bengkulu.",
+        "Berpartisipasi dalam program pemberdayaan dan pengembangan UMKM di Kabupaten Kepahiang.",
+        "Terlibat dalam kegiatan internal organisasi, termasuk Welcoming Kepengurusan GenBI dan program Sajadah Ramadan."
       ],
-      "contributions": "[Kontribusi dan pencapaian — isi melalui Pages CMS]",
-      "photos": []
+      "contributions": "Berkontribusi dalam pengembangan program edukasi, pemberdayaan masyarakat, dan pengelolaan kegiatan GenBI. Berhasil menjadi bagian dari 80 tim finalis capstone project PIDI DIGDAYA x Hackathon 2026 dari 2.500 proposal yang masuk, meraih Juara 1 dalam Capacity Building Welcoming Kepengurusan GenBI Komisariat Universitas Bengkulu, serta mendukung keberhasilan program Sajadah Ramadan hingga seluruh produk takjil terjual habis."
+    },
+    {
+      "organization": "Agen Pojok Statistik Universitas Bengkulu",
+      "position": "Ketua Bidang Event",
+      "period_start": "Agustus 2023",
+      "period_end": "Oktober 2025",
+      "description": "Menjabat sebagai Ketua Bidang Event Agen Pojok Statistik Universitas Bengkulu, unit layanan statistik yang berada di bawah naungan BPS Provinsi Bengkulu. Bertanggung jawab mengoordinasikan perencanaan dan pelaksanaan program edukasi statistik, sekaligus mendukung penyebarluasan informasi dan pemanfaatan data statistik bagi civitas akademika dan masyarakat umum.",
+      "responsibilities": [
+        "Mengoordinasikan perencanaan, penyusunan konsep, dan pelaksanaan program kegiatan edukasi statistik.",
+        "Mengelola dan memastikan kelancaran berbagai acara edukasi statistik dalam format luring, daring, maupun hybrid.",
+        "Menjadi moderator dalam webinar dan kegiatan edukasi statistik, termasuk kolaborasi antara BPS dan OJK Provinsi Bengkulu.",
+        "Memberikan pendampingan kepada mahasiswa dan dosen dalam mengakses serta memperoleh data sekunder melalui website BPS.",
+        "Membantu layanan konsultasi analisis data untuk mendukung kebutuhan penelitian dan penyusunan skripsi mahasiswa",
+        "Berkolaborasi dalam penyusunan materi edukasi dan infografis statistik, termasuk publikasi data kelistrikan Provinsi Bengkulu."
+      ],
+      "contributions": "Berhasil mengoordinasikan pelaksanaan program edukasi statistik selama masa kepengurusan dan berkontribusi dalam meningkatkan literasi statistik serta pemanfaatan data BPS di lingkungan akademik dan masyarakat. Memoderatori kegiatan Melek Data, Melek Finansial hasil kolaborasi BPS dan OJK Provinsi Bengkulu pada 24 Juli 2025. Selama masa kepengurusan, Agen Pojok Statistik Universitas Bengkulu berhasil meraih penghargaan Pojok Statistik Terbaik se-Indonesia Tahun 2025, dengan pencapaian yang turut didukung oleh koordinasi dan pelaksanaan program kerja tim."
+    },
+    {
+      "organization": "Ilook Pedia",
+      "position": "Sekretaris dan Copywriter",
+      "period_start": "Agustus 2024",
+      "period_end": "Agustus 2026",
+      "description": "Berperan sebagai Sekretaris dan Copywriter di Ilook Pedia, media informasi mahasiswa Universitas Bengkulu, dengan fokus pada pengelolaan administrasi organisasi serta penyusunan konten komunikasi digital untuk menyampaikan informasi kepada audiens mahasiswa.",
+      "responsibilities": [
+        "Mengelola korespondensi dan administrasi surat-menyurat organisasi.",
+        "Menyusun, mengarsipkan, dan mendokumentasikan dokumen administrasi untuk mendukung operasional media.",
+        "Menulis caption Instagram yang informatif, komunikatif, dan menarik bagi audiens mahasiswa.",
+        "Menyusun naskah dan materi tulisan untuk berbagai kebutuhan konten media sosial.",
+        "Berkolaborasi dengan tim media dalam memastikan ketepatan informasi dan kualitas publikasi konten."
+      ],
+      "contributions": "Mendukung kelancaran operasional dan komunikasi organisasi melalui pengelolaan administrasi yang terstruktur serta penyusunan konten media sosial yang informatif dan mudah dipahami. Turut membantu meningkatkan kualitas penyampaian informasi dan keterlibatan audiens mahasiswa melalui publikasi digital."
+    },
+    {
+      "organization": "Himpunan Mahasiswa Statistika (HIMASTA) Universitas Bengkulu",
+      "position": "Anggota Bidang Penelitian dan Pengembangan (Litbang)",
+      "period_start": "Januari 2023",
+      "period_end": "Desember 2024",
+      "description": "Berperan sebagai anggota Bidang Penelitian dan Pengembangan (Litbang) HIMASTA Universitas Bengkulu, yang berfokus pada pengembangan kompetensi akademik, kemampuan riset, dan pola pikir kritis mahasiswa Statistika. Terlibat dalam penyelenggaraan berbagai kegiatan edukatif, pelatihan pemrograman, serta acara tahunan Statistics Fair untuk mendukung pengembangan kemampuan mahasiswa di bidang statistika dan analisis data.",
+      "responsibilities": [
+        "Menyusun konsep dan mendukung pelaksanaan kegiatan pelatihan pemrograman R serta penulisan Karya Tulis Ilmiah (KTI) bagi mahasiswa.",
+        "Menjadi moderator dalam pelatihan pemrograman R dan seminar edukasi statistik.",
+        "Berpartisipasi sebagai anggota bidang acara dalam penyelenggaraan Statistics Fair, termasuk mengelola pelaksanaan berbagai kompetisi seperti lomba infografis tingkat nasional.",
+        "Menjadi moderator dalam seminar Pentingnya Data dalam Kehidupan yang diselenggarakan secara luring di Taman Budaya Kota Bengkulu.",
+        "Menjadi Master of Ceremony (MC) formal pada malam puncak Statistics Fair.",
+        "Berkolaborasi dalam penyelenggaraan Mini Bootcamp bertema Unsupervised Learning menggunakan Python."
+      ],
+      "contributions": "Berkontribusi dalam pengembangan kompetensi akademik dan keterampilan mahasiswa melalui penyelenggaraan pelatihan pemrograman R, penulisan karya ilmiah, serta kegiatan edukasi statistik. Turut mendukung keberhasilan rangkaian Statistics Fair melalui pengelolaan kegiatan dan moderasi seminar Pentingnya Data dalam Kehidupan yang dihadiri lebih dari 100 peserta, serta berperan dalam memperkenalkan penerapan metode Unsupervised Learning menggunakan Python melalui Mini Bootcamp."
     }
   ]
 }
