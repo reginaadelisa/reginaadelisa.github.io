@@ -1,32 +1,41 @@
 {
   "experiences": [
     {
-      "position": "Asisten Praktikum Komputasi Statistika",
+      "position": "Pembantu Peneliti",
       "institution": "Universitas Bengkulu",
-      "department": "Program Studi Statistika",
-      "period_start": "2024",
-      "period_end": "sekarang",
-      "description": "Mendampingi mahasiswa dalam praktikum mata kuliah Komputasi Statistika menggunakan software R.",
+      "department": "Statistika",
+      "period_start": "April 2025",
+      "period_end": "Sekarang",
+      "description": "Terlibat sebagai Pembantu Peneliti dalam penelitian dosen Universitas Bengkulu mengenai pemodelan Geographically Weighted Nonparametric Regression (GWNR) dengan pendekatan Spline Truncated. Penelitian ini didanai melalui program Hibah DPPM BIMA di bawah Kementerian Pendidikan Tinggi, Sains, dan Teknologi (KEMDIKTISAINTEK), dengan fokus pada pemodelan data kemiskinan dan analisis spasial.",
       "responsibilities": [
-        "Membimbing mahasiswa dalam penggunaan software R untuk analisis data statistika.",
-        "Mempersiapkan materi dan modul praktikum.",
-        "Mengevaluasi dan mengoreksi laporan praktikum mahasiswa."
+        "Mengembangkan sintaks R untuk proses pengumpulan, pembersihan, pengolahan, dan analisis data kemiskinan yang bersumber dari Badan Pusat Statistik (BPS).",
+        "Melakukan implementasi dan pengujian metode pemodelan GWNR dengan pendekatan Spline Truncated.",
+        "Melakukan eksplorasi dan visualisasi data untuk mengidentifikasi pola kemiskinan secara spasial.",
+        "Menyusun materi publikasi penelitian, termasuk poster ilmiah, buku, dan laporan teknis hasil penelitian bersama tim.",
+        "Berkontribusi dalam penyusunan artikel ilmiah berdasarkan hasil pemodelan dan analisis data.",
+        "Menyusun dan mengajukan dokumen Hak Kekayaan Intelektual (HKI) atas hasil penelitian.",
+        "Menyusun notulensi rapat dan mendokumentasikan hasil diskusi serta perkembangan kegiatan penelitian."
       ],
-      "contributions": "",
-      "photos": []
+      "contributions": "Memberikan dukungan teknis dan akademik dalam pelaksanaan penelitian dosen, khususnya pada pengembangan pemodelan statistik spasial untuk analisis kemiskinan di wilayah Sumatra. Keterlibatan ini turut mendukung pengembangan hasil penelitian menjadi luaran ilmiah dan kekayaan intelektual."
     },
     {
-      "position": "[Posisi — isi melalui Pages CMS]",
-      "institution": "[Nama Institusi — isi melalui Pages CMS]",
-      "department": "[Nama Departemen — isi melalui Pages CMS]",
-      "period_start": "[Tahun Mulai]",
-      "period_end": "[Tahun Selesai]",
-      "description": "[Deskripsi pekerjaan — isi melalui Pages CMS]",
+      "position": "Freelance Pengajar Matematika",
+      "institution": "Narapelajar",
+      "period_start": "Agustus 2025",
+      "period_end": "Sekarang",
+      "description": "Mengajar dan membimbing siswa SMA dalam persiapan ujian akademik dan seleksi masuk perguruan tinggi, meliputi TKA Matematika Wajib dan Matematika Tingkat Lanjut, UTBK-SNBT (PK, PM, dan PU), serta Olimpiade Matematika.",
       "responsibilities": [
-        "[Tanggung jawab 1 — isi melalui Pages CMS]"
+        "Menyiapkan materi dan menyusun latihan soal sesuai kurikulum serta kebutuhan pembelajaran.",
+        "Menyampaikan materi dan pembahasan soal dengan pendekatan yang sistematis dan mudah dipahami.",
+        "Membimbing siswa dalam mengembangkan kemampuan penalaran dan pemecahan masalah matematis.",
+        "Mengevaluasi perkembangan belajar serta memberikan umpan balik untuk meningkatkan pemahaman siswa.",
+        "Mendampingi 30+ siswa dalam persiapan akademik dan seleksi masuk perguruan tinggi."
       ],
-      "contributions": "[Kontribusi — isi melalui Pages CMS]",
-      "photos": []
-    }
+      "contributions": "Membimbing 30+ siswa SMA, dengan capaian siswa berhasil lolos seleksi masuk Perguruan Tinggi Negeri melalui UTBK-SNBT.",
+      "photos": [
+        "assets/images/work/Pengajar Matematika.png"
+      ]
+    },
+    {}
   ]
 }
