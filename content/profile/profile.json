@@ -1,16 +1,17 @@
 {
   "name": "Regina Adelisa",
-  "headline": "Data Analyst & Statistika",
+  "headline": "Data & Analytics",
   "education": "Lulusan S-1 Statistika Universitas Bengkulu",
-  "bio": "Mahasiswa Statistika Universitas Bengkulu yang memiliki minat kuat di bidang analisis data, ilmu data, dan pengembangan akademik. Berpengalaman dalam pemodelan statistika, analisis data, serta pengembangan solusi berbasis data.",
+  "intro": "Halo! Saya",
+  "bio": "Saya merupakan lulusan Statistika dengan ketertarikan pada Data Analytics dan Data Science, khususnya Machine Learning, Statistical Modeling, dan Spatial Statistics. Berbekal latar belakang statistika serta pengalaman dalam penelitian dan pengolahan data, saya tertarik mengeksplorasi data, membangun model, dan menghasilkan insight yang mendukung pengambilan keputusan.",
   "tagline": "Turning data into meaningful insights.",
   "photo": "assets/images/profile/Foto Regina Adelisa LinkedIn.jpg",
   "interests": [
-    "Data Analysis",
-    "Data Science",
-    "Statistical Modeling",
-    "Machine Learning",
-    "Academic Research"
+    "BNSP-Certified Associate Data Analyst",
+    "Research Assistant",
+    "Former Data Analyst Intern at BPS Bengkulu Province",
+    "Bank Indonesia Scholarship Awardee",
+    "PIDI DIGDAYA x Hackathon BI OJK 2026 Finalist"
   ],
   "button_primary_label": "Unduh CV",
   "button_secondary_label": "Hubungi Saya",
