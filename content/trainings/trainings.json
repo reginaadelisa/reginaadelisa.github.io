@@ -1,17 +1,11 @@
 {
   "trainings": [
     {
-      "name": "[Nama Pelatihan — isi melalui Pages CMS]",
-      "organizer": "[Penyelenggara — isi melalui Pages CMS]",
-      "period_start": "[Tahun/Tanggal Mulai]",
-      "period_end": "[Tahun/Tanggal Selesai]",
-      "description": "[Deskripsi pelatihan — isi melalui Pages CMS]",
-      "topics": [
-        "[Materi/topik 1 — isi melalui Pages CMS]"
-      ],
-      "photo": "",
-      "certificate_photo": "",
-      "certificate_pdf": ""
+      "name": "Data - AI Agent for Data Analysis",
+      "organizer": "Hacktiv8 Indonesia",
+      "period_start": "Oktober 2026",
+      "period_end": "Oktober 2026",
+      "certificate_pdf": "assets/documents/Sertifikat Hacktiv8 Data.pdf"
     }
   ]
 }
