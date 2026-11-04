@@ -36,6 +36,69 @@
         "assets/images/work/Pengajar Matematika.png"
       ]
     },
-    {}
+    {
+      "position": "Asisten Praktikum Data Mining",
+      "institution": "Universitas Bengkulu",
+      "department": "Statistika",
+      "period_start": "April 2026",
+      "period_end": "Juni 2026",
+      "description": "Berperan sebagai Asisten Dosen Praktikum Data Mining pada Program Studi S-1 Statistika Universitas Bengkulu, dengan fokus mendukung proses pembelajaran dan penerapan teknik data mining menggunakan bahasa pemrograman R.",
+      "responsibilities": [
+        "Membantu dosen dalam pelaksanaan praktikum Data Mining bagi mahasiswa S-1 Statistika angkatan 2023.",
+        "Membimbing mahasiswa dalam memahami konsep dan tahapan analisis data mining.",
+        "Mendampingi mahasiswa dalam mengimplementasikan metode data mining menggunakan bahasa pemrograman R.",
+        "Membimbing mahasiswa menyelesaikan latihan dan tugas praktikum.",
+        "Memberikan arahan serta membantu mengatasi kendala teknis selama praktikum berlangsung."
+      ],
+      "contributions": "Mendukung kelancaran kegiatan praktikum melalui pendampingan akademik dan teknis, serta membantu mahasiswa memperoleh pengalaman langsung dalam penerapan metode data mining menggunakan R."
+    },
+    {
+      "position": "Asisten Praktikum Statistika Nonparametrik",
+      "institution": "Universitas Bengkulu",
+      "department": "Statistika",
+      "period_start": "Oktober 2025",
+      "period_end": "Desember 2025",
+      "description": "Bertanggung jawab sebagai Ketua Praktikum Statistika Nonparametrik pada Program Studi S-1 Statistika Universitas Bengkulu, dengan peran mengoordinasikan tim asisten, menjembatani komunikasi antara dosen pengampu dan mahasiswa, serta mendukung pengembangan materi pembelajaran berbasis R.",
+      "responsibilities": [
+        "Mengelola dan mengoordinasikan pembagian tugas serta alur kerja tim asisten praktikum.",
+        "Menjadi penghubung komunikasi antara dosen pengampu, tim asisten, dan mahasiswa.",
+        "Membantu dosen dalam pelaksanaan praktikum bagi mahasiswa S-1 Statistika angkatan 2023.",
+        "Membimbing mahasiswa dalam memahami konsep dan penerapan metode statistika nonparametrik.",
+        "Berkolaborasi dengan dosen dalam menyusun modul praktikum dan mengembangkan sintaks R sebagai bahan ajar."
+      ],
+      "contributions": "Mendukung kelancaran dan keteraturan pelaksanaan praktikum melalui koordinasi tim serta komunikasi yang efektif. Turut berkontribusi dalam pengembangan bahan ajar berbasis R untuk menunjang pemahaman mahasiswa terhadap metode statistika nonparametrik."
+    },
+    {
+      "position": "Asisten Praktikum Pengantar Ilmu Komputer (PIK)",
+      "institution": "Universitas Bengkulu",
+      "department": "Statistika",
+      "period_start": "Oktober 2025",
+      "period_end": "Desember 2025",
+      "description": "Berperan sebagai Asisten Praktikum Pengantar Ilmu Komputer (PIK) pada Program Studi S-1 Statistika Universitas Bengkulu, dengan fokus membimbing mahasiswa dalam penguasaan Microsoft Excel, dasar pemrograman C++, serta penerapan logika algoritma dan komputasi.",
+      "responsibilities": [
+        "Membantu dosen dalam pelaksanaan praktikum Pengantar Ilmu Komputer bagi mahasiswa S-1 Statistika angkatan 2025.",
+        "Mengajarkan konsep dasar algoritma, logika berpikir komputasional, dan struktur pemrograman menggunakan C++.",
+        "Membimbing mahasiswa dalam memahami sintaks dan mengimplementasikan program sederhana menggunakan C++.",
+        "Mendampingi mahasiswa dalam menerapkan konsep matematika untuk analisis data menggunakan Microsoft Excel.",
+        "Mengajarkan penggunaan fungsi dan fitur tingkat lanjut Microsoft Excel untuk pengolahan data."
+      ],
+      "contributions": "Mendukung pengembangan keterampilan komputasi mahasiswa melalui pembelajaran praktis pemrograman C++ dan Microsoft Excel, serta membantu membangun pemahaman dasar mengenai algoritma, logika pemrograman, dan pengolahan data"
+    },
+    {
+      "position": "Asisten Praktikum Komputasi Statistika",
+      "institution": "Universitas Bengkulu",
+      "department": "Statistika",
+      "period_start": "Oktober 2024",
+      "period_end": "Desember 2024",
+      "description": "Berperan sebagai Asisten Praktikum Komputasi Statistika pada Program Studi S-1 Statistika Universitas Bengkulu, dengan fokus membimbing mahasiswa dalam penerapan komputasi statistik dan penggunaan bahasa pemrograman R untuk menyelesaikan permasalahan statistik.",
+      "responsibilities": [
+        "Membantu dosen dalam pelaksanaan praktikum Komputasi Statistika bagi mahasiswa S-1 Statistika angkatan 2023.",
+        "Membimbing mahasiswa dalam memahami dasar penggunaan bahasa pemrograman R untuk analisis statistik.",
+        "Mengajarkan implementasi prosedur komputasi untuk berbagai metode analisis data.",
+        "Mendampingi mahasiswa dalam melakukan analisis statistika deskriptif dan pengujian hipotesis menggunakan R.",
+        "Membimbing mahasiswa menyelesaikan latihan dan tugas praktikum serta mengatasi kendala teknis dalam penggunaan R."
+      ],
+      "contributions": "Mendukung peningkatan keterampilan komputasi statistik mahasiswa melalui pendampingan praktis dalam penggunaan R, mulai dari pengolahan dan analisis data hingga penerapan metode pengujian statistik."
+    }
   ]
 }
