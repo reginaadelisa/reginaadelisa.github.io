@@ -1,37 +1,143 @@
 {
   "hard_skills": [
     {
-      "category": "Programming & Data Tools",
+      "category": "Data Analytics & Programming",
       "items": [
-        { "name": "R", "logo": "", "description": "Analisis statistika, pemodelan, dan visualisasi data." },
-        { "name": "Python", "logo": "", "description": "Data processing, machine learning, dan scripting." },
-        { "name": "SQL", "logo": "", "description": "Query dan manajemen basis data relasional." },
-        { "name": "Microsoft Excel", "logo": "", "description": "Analisis data, pivot table, dan formula lanjutan." },
-        { "name": "Pandas", "logo": "", "description": "Manipulasi dan analisis data dengan Python." }
+        {
+          "name": "Python",
+          "logo": "assets/images/python image.webp",
+          "description": "Pengolahan data, analisis, dan pengembangan model machine learning."
+        },
+        {
+          "name": "R",
+          "logo": "assets/images/R image.png",
+          "description": "Komputasi statistik, analisis data, dan pemodelan statistik."
+        },
+        {
+          "name": "SQL",
+          "logo": "assets/images/sql image.jpg",
+          "description": "Pengambilan, pengelolaan, dan manipulasi data dalam database."
+        },
+        {
+          "name": "SPSS",
+          "logo": "assets/images/ibm image 1.jpg",
+          "description": "Pengolahan data dan analisis statistik untuk penelitian."
+        },
+        {
+          "name": "Microsoft Excel",
+          "logo": "assets/images/excel image.jpg",
+          "description": "Pengolahan data, perhitungan, dan analisis menggunakan spreadsheet."
+        }
       ]
     },
     {
-      "category": "Analytical Competencies",
+      "category": "Data Visualization & Design",
       "items": [
-        { "name": "Data Analysis", "logo": "", "description": "Mengolah dan menginterpretasikan data untuk menghasilkan insight." },
-        { "name": "Statistical Modeling", "logo": "", "description": "Pemodelan regresi, spasial, dan inferensial." },
-        { "name": "Data Visualization", "logo": "", "description": "Menyajikan data secara visual menggunakan Tableau, Looker Studio, dan ggplot2." },
-        { "name": "Machine Learning", "logo": "", "description": "Supervised dan unsupervised learning." },
-        { "name": "Data Processing", "logo": "", "description": "Pembersihan, transformasi, dan eksplorasi data." }
+        {
+          "name": "Power BI",
+          "logo": "assets/images/powerbi image.jpg",
+          "description": "Pembuatan dashboard interaktif dan laporan visualisasi data."
+        },
+        {
+          "name": "Tableau",
+          "logo": "assets/images/tableau image.png",
+          "description": "Eksplorasi data dan penyajian visualisasi interaktif."
+        },
+        {
+          "name": "Canva",
+          "logo": "assets/images/canva image.jpg",
+          "description": "Pembuatan infografis, presentasi, dan desain visual."
+        }
       ]
     },
     {
       "category": "AI & Development Tools",
       "items": [
-        { "name": "Langflow", "logo": "", "description": "Pembangunan pipeline RAG dan AI berbasis visual." },
-        { "name": "GitHub", "logo": "", "description": "Version control dan kolaborasi kode." },
-        { "name": "Google Colab", "logo": "", "description": "Komputasi berbasis cloud dengan notebook Python." },
-        { "name": "Canva", "logo": "", "description": "Desain grafis, poster, dan presentasi." }
+        {
+          "name": "Langflow",
+          "logo": "assets/images/langflow image.jpg",
+          "description": "Pembuatan workflow AI dan aplikasi berbasis LLM."
+        },
+        {
+          "name": "GitHub",
+          "logo": "assets/images/github image.png",
+          "description": "Pengelolaan repositori kode dan kolaborasi proyek."
+        },
+        {
+          "name": "Google Colab",
+          "logo": "assets/images/colab image.jpg",
+          "description": "Eksperimen kode Python dan analisis data berbasis cloud."
+        },
+        {
+          "name": "HTML",
+          "logo": "assets/images/html image.jpg",
+          "description": "Penyusunan struktur halaman website."
+        },
+        {
+          "name": "CSS",
+          "logo": "assets/images/css image.jpg",
+          "description": "Pengaturan tampilan dan tata letak website."
+        },
+        {
+          "name": "JavaScript",
+          "logo": "assets/images/js image.jpg",
+          "description": "Pengembangan interaktivitas dan fungsi website."
+        }
+      ]
+    },
+    {
+      "category": "Productivity Tools",
+      "items": [
+        {
+          "name": "Microsoft Word",
+          "logo": "assets/images/word image.jpg",
+          "description": "Penyusunan dokumen dan laporan."
+        },
+        {
+          "name": "Microsoft PowerPoint",
+          "logo": "assets/images/ppt image.jpg",
+          "description": "Pembuatan presentasi dan materi visual."
+        },
+        {
+          "name": "Notion",
+          "logo": "assets/images/notion image.png",
+          "description": "Pengelolaan catatan, dokumentasi, dan perencanaan pekerjaan."
+        }
       ]
     }
   ],
   "soft_skills": [
-    { "name": "[Soft Skill 1 — isi melalui Pages CMS]", "description": "[Deskripsi — isi melalui Pages CMS]" },
-    { "name": "[Soft Skill 2 — isi melalui Pages CMS]", "description": "[Deskripsi — isi melalui Pages CMS]" }
+    {
+      "name": "Analytical Thinking",
+      "description": "Menganalisis informasi dan menemukan insight untuk memahami suatu permasalahan serta mendukung pengambilan keputusan."
+    },
+    {
+      "name": "Problem Solving",
+      "description": "Menentukan pendekatan yang tepat untuk memahami permasalahan dan mengembangkan solusi."
+    },
+    {
+      "name": "Data Storytelling",
+      "description": "Mengubah hasil analisis menjadi cerita yang informatif melalui narasi dan visualisasi untuk mendukung pengambilan keputusan."
+    },
+    {
+      "name": "Communication",
+      "description": "Menyampaikan ide, temuan, dan informasi secara jelas kepada berbagai audiens, baik teknis maupun nonteknis."
+    },
+    {
+      "name": "Attention to Detail",
+      "description": "Memperhatikan ketelitian dan konsistensi dalam setiap tahapan pekerjaan."
+    },
+    {
+      "name": "Teamwork",
+      "description": "Berkolaborasi dan berbagi ide untuk menyelesaikan proyek serta mencapai tujuan bersama."
+    },
+    {
+      "name": "Adaptability",
+      "description": "Mampu menyesuaikan diri dengan perubahan kebutuhan, metode kerja, dan perkembangan teknologi."
+    },
+    {
+      "name": "Time Management",
+      "description": "Mengelola prioritas dan waktu secara efektif untuk menyelesaikan pekerjaan sesuai tenggat."
+    }
   ]
 }
