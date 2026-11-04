@@ -187,6 +187,9 @@ content:
           - name: "department"
             label: "Departemen / Program Studi"
             type: "string"
+          - name: "location"
+            label: "Lokasi (opsional)"
+            type: "string"
           - name: "period_start"
             label: "Periode Mulai"
             type: "string"
@@ -203,12 +206,23 @@ content:
           - name: "contributions"
             label: "Kontribusi"
             type: "text"
+          - name: "cover_photo"
+            label: "Foto Cover (opsional)"
+            type: "image"
+            options:
+              media: "work-images"
           - name: "photos"
             label: "Galeri Foto Dokumentasi"
             type: "image"
             options:
               media: "work-images"
               multiple: {}
+          - name: "pdf"
+            label: "Dokumen Pendukung PDF (opsional)"
+            type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
 
   - name: "pengalaman-organisasi"
     label: "Pengalaman Organisasi"
@@ -243,12 +257,23 @@ content:
           - name: "contributions"
             label: "Kontribusi"
             type: "text"
+          - name: "cover_photo"
+            label: "Foto Cover (opsional)"
+            type: "image"
+            options:
+              media: "organization-images"
           - name: "photos"
             label: "Galeri Foto Dokumentasi"
             type: "image"
             options:
               media: "organization-images"
               multiple: {}
+          - name: "pdf"
+            label: "Dokumen Pendukung PDF (opsional)"
+            type: "file"
+            options:
+              media: "documents"
+              extensions: ["pdf"]
 
   - name: "projects"
     label: "Projects"

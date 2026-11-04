@@ -38,6 +38,136 @@ function periodStr(start, end) {
   return `${esc(start)}${e}`;
 }
 
+const pdfPreviewCache = new Map();
+
+function renderPdfPreview(url, alt) {
+  return `<div class="pdf-preview" data-pdf-preview="${esc(url)}" data-pdf-alt="${esc(alt)}">
+    <span class="pdf-preview-status" aria-live="polite">Memuat pratinjau PDF…</span>
+    <img class="pdf-preview-image" alt="${esc(alt)}" hidden>
+  </div>`;
+}
+
+function renderThumbnail(image, pdf, options) {
+  const { containerClass, placeholderClass, placeholder, alt, lightbox = true } = options;
+  const validImage = image && !isP(image);
+  const validPdf = pdf && !isP(pdf);
+  let content = '';
+
+  if (validImage) {
+    content = `<img class="media-thumb-image" src="${esc(image)}" alt="${esc(alt)}" loading="lazy"
+      data-placeholder-class="${esc(placeholderClass)}" data-placeholder="${esc(placeholder)}"
+      ${lightbox ? `data-lightbox-src="${esc(image)}"` : ''}${validPdf ? ` data-fallback-pdf="${esc(pdf)}"` : ''}>`;
+  } else if (validPdf) {
+    content = renderPdfPreview(pdf, alt);
+  } else {
+    content = `<div class="${placeholderClass}">${placeholder}</div>`;
+  }
+
+  return `<div class="${containerClass} media-thumb">${content}</div>`;
+}
+
+function getPdfPreview(url) {
+  const absoluteUrl = new URL(url, document.baseURI).href;
+  if (pdfPreviewCache.has(absoluteUrl)) return pdfPreviewCache.get(absoluteUrl);
+
+  const preview = (async () => {
+    const pdfjs = window.pdfjsLib;
+    if (!pdfjs) throw new Error('PDF.js gagal dimuat');
+
+    const documentTask = pdfjs.getDocument({ url: absoluteUrl });
+    let pdf;
+    let page;
+    const canvas = document.createElement('canvas');
+
+    try {
+      pdf = await documentTask.promise;
+      page = await pdf.getPage(1);
+      const baseViewport = page.getViewport({ scale: 1 });
+      const scale = Math.min(1.5, 600 / baseViewport.width);
+      const viewport = page.getViewport({ scale });
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Canvas 2D tidak tersedia');
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
+      await page.render({ canvasContext: context, viewport }).promise;
+      return canvas.toDataURL('image/jpeg', 0.82);
+    } finally {
+      page?.cleanup();
+      canvas.width = 0;
+      canvas.height = 0;
+      await documentTask.destroy();
+    }
+  })();
+
+  pdfPreviewCache.set(absoluteUrl, preview);
+  preview.catch(() => pdfPreviewCache.delete(absoluteUrl));
+  if (pdfPreviewCache.size > 12) {
+    const oldestKey = pdfPreviewCache.keys().next().value;
+    if (oldestKey !== absoluteUrl) pdfPreviewCache.delete(oldestKey);
+  }
+  return preview;
+}
+
+function initMediaPreviews(root = document) {
+  const previews = [...root.querySelectorAll('[data-pdf-preview]')];
+  if (root.matches?.('[data-pdf-preview]')) previews.push(root);
+  const observePreview = element => {
+    const url = element.dataset.pdfPreview;
+    Promise.resolve().then(() => getPdfPreview(url)).then(src => {
+      const image = element.querySelector('.pdf-preview-image');
+      const status = element.querySelector('.pdf-preview-status');
+      if (!image || !status || !element.isConnected) return;
+      image.src = src;
+      image.hidden = false;
+      status.remove();
+    }).catch(error => {
+      console.warn('PDF preview:', url, error.message);
+      const status = element.querySelector('.pdf-preview-status');
+      if (status) status.textContent = 'Pratinjau PDF tidak tersedia';
+      element.classList.add('pdf-preview--error');
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        observePreview(entry.target);
+      });
+    }, { rootMargin: '120px' });
+    previews.forEach(preview => {
+      if (preview.dataset.pdfPreviewObserved) return;
+      preview.dataset.pdfPreviewObserved = 'true';
+      observer.observe(preview);
+    });
+  } else {
+    previews.forEach(observePreview);
+  }
+
+  root.querySelectorAll('img.media-thumb-image').forEach(image => {
+    if (image.dataset.previewFallbackBound) return;
+    image.dataset.previewFallbackBound = 'true';
+    image.addEventListener('error', () => {
+      let preview;
+      if (image.dataset.fallbackPdf) {
+        preview = document.createElement('div');
+        preview.className = 'pdf-preview';
+        preview.dataset.pdfPreview = image.dataset.fallbackPdf;
+        preview.dataset.pdfAlt = image.alt;
+        preview.innerHTML = `<span class="pdf-preview-status" aria-live="polite">Memuat pratinjau PDF…</span>
+          <img class="pdf-preview-image" alt="${esc(image.alt)}" hidden>`;
+      } else {
+        preview = document.createElement('div');
+        preview.className = image.dataset.placeholderClass;
+        preview.textContent = image.dataset.placeholder;
+      }
+      image.replaceWith(preview);
+      if (preview.dataset.pdfPreview) initMediaPreviews(preview);
+    }, { once: true });
+  });
+}
+
 /* Render an array of image paths as a clickable gallery */
 function renderGallery(photos) {
   if (!Array.isArray(photos) || photos.length === 0) return '';
@@ -59,36 +189,54 @@ function openModal(html) {
   const body    = document.getElementById('detail-modal-body');
   if (!overlay || !body) return;
   body.innerHTML = html;
+  initMediaPreviews(body);
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
-
-  // Delegated lightbox click inside modal
-  body.addEventListener('click', e => {
-    const el = e.target.closest('[data-lightbox-src]');
-    if (el) openLightbox(el.dataset.lightboxSrc);
-  });
 }
 
 function closeModal() {
   const overlay = document.getElementById('detail-modal');
   if (overlay) overlay.classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.style.overflow = document.getElementById('lightbox')?.classList.contains('open') ? 'hidden' : '';
 }
 
 /* ── LIGHTBOX ────────────────────────────────────────────── */
-function openLightbox(src) {
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+function showLightboxImage(index) {
+  if (!lightboxImages.length) return;
+  lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
+  const img = document.getElementById('lightbox-img');
+  if (img) img.src = lightboxImages[lightboxIndex];
+  const multiple = lightboxImages.length > 1;
+  document.getElementById('lightbox-prev')?.toggleAttribute('hidden', !multiple);
+  document.getElementById('lightbox-next')?.toggleAttribute('hidden', !multiple);
+}
+
+function openLightbox(src, images = [src]) {
   if (!src || isP(src)) return;
   const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  if (!lb || !img) return;
-  img.src = src;
+  if (!lb) return;
+  lightboxImages = images.filter(image => image && !isP(image));
+  lightboxIndex = Math.max(0, lightboxImages.indexOf(src));
+  showLightboxImage(lightboxIndex);
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
+
+function stepLightbox(direction) {
+  if (lightboxImages.length > 1) showLightboxImage(lightboxIndex + direction);
+}
+
 function closeLightbox() {
   const lb = document.getElementById('lightbox');
   if (lb) lb.classList.remove('open');
-  document.body.style.overflow = '';
+  const img = document.getElementById('lightbox-img');
+  if (img) img.removeAttribute('src');
+  lightboxImages = [];
+  lightboxIndex = 0;
+  document.body.style.overflow = document.getElementById('detail-modal')?.classList.contains('open') ? 'hidden' : '';
 }
 
 /* ── NAV ──────────────────────────────────────────────────── */
@@ -126,9 +274,28 @@ function initModals() {
   const lb = document.getElementById('lightbox');
   lb?.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
   document.getElementById('lightbox-close')?.addEventListener('click', closeLightbox);
+  document.getElementById('lightbox-prev')?.addEventListener('click', () => stepLightbox(-1));
+  document.getElementById('lightbox-next')?.addEventListener('click', () => stepLightbox(1));
+
+  document.addEventListener('click', e => {
+    const trigger = e.target.closest('[data-lightbox-src]');
+    if (!trigger) return;
+    const src = trigger.dataset.lightboxSrc;
+    const gallery = trigger.closest('.modal-gallery');
+    const images = gallery
+      ? [...gallery.querySelectorAll('[data-lightbox-src]')].map(image => image.dataset.lightboxSrc)
+      : [src];
+    openLightbox(src, images);
+  });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModal(); closeLightbox(); }
+    if (e.key === 'Escape') {
+      closeModal();
+      closeLightbox();
+    } else if (document.getElementById('lightbox')?.classList.contains('open')) {
+      if (e.key === 'ArrowLeft') stepLightbox(-1);
+      if (e.key === 'ArrowRight') stepLightbox(1);
+    }
   });
 }
 
@@ -235,6 +402,12 @@ function buildExpModal(item, isOrg = false) {
   const institution = isOrg ? item.organization : item.institution;
   const deptLine = (!isOrg && item.department && !isP(item.department))
     ? ` <span style="color:var(--text-muted)">· ${esc(item.department)}</span>` : '';
+  const locationLine = item.location && !isP(item.location)
+    ? `<div class="modal-location">${esc(item.location)}</div>` : '';
+  const pdfLink = item.pdf && !isP(item.pdf)
+    ? `<div class="modal-section"><a href="${esc(item.pdf)}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Buka PDF pendukung</a></div>` : '';
+  const cover = item.cover_photo && !isP(item.cover_photo)
+    ? `<img class="exp-modal-cover" src="${esc(item.cover_photo)}" alt="${esc(item.position)}" data-lightbox-src="${esc(item.cover_photo)}">` : '';
 
   const respHtml = Array.isArray(item.responsibilities) && item.responsibilities.filter(r => !isP(r)).length
     ? `<div class="modal-section">
@@ -253,10 +426,13 @@ function buildExpModal(item, isOrg = false) {
     <div class="modal-title">${ph(item.position)}</div>
     <div class="modal-subtitle">${ph(institution)}${deptLine}</div>
     <div class="modal-period">${periodStr(item.period_start, item.period_end)}</div>
+    ${locationLine}
+    ${cover}
     ${item.description && !isP(item.description)
       ? `<div class="modal-section"><div class="modal-section-label">Deskripsi</div><p class="modal-text">${esc(item.description)}</p></div>` : ''}
     ${respHtml}
     ${contribHtml}
+    ${pdfLink}
     ${renderGallery(item.photos)}
   </div>`;
 }
@@ -270,6 +446,13 @@ async function renderWorkExperiences() {
 
   container.innerHTML = data.map((exp, idx) => `
     <div class="exp-card" data-exp-type="work" data-exp-idx="${idx}">
+      ${renderThumbnail(exp.cover_photo, '', {
+        containerClass: 'exp-card-cover',
+        placeholderClass: 'exp-card-placeholder',
+        placeholder: '💼',
+        alt: exp.position || 'Dokumentasi pengalaman kerja',
+        lightbox: false,
+      })}
       <div class="exp-card-position">${ph(exp.position)}</div>
       <div class="exp-card-institution">${ph(exp.institution)}</div>
       <div class="exp-card-period">${periodStr(exp.period_start, exp.period_end)}</div>
@@ -279,6 +462,7 @@ async function renderWorkExperiences() {
         <span class="exp-card-click-hint">Lihat detail →</span>
       </div>
     </div>`).join('');
+  initMediaPreviews(container);
 
   container.addEventListener('click', e => {
     const card = e.target.closest('[data-exp-idx]');
@@ -296,6 +480,13 @@ async function renderOrganizations() {
 
   container.innerHTML = data.map((org, idx) => `
     <div class="exp-card" data-exp-type="org" data-exp-idx="${idx}">
+      ${renderThumbnail(org.cover_photo, '', {
+        containerClass: 'exp-card-cover',
+        placeholderClass: 'exp-card-placeholder',
+        placeholder: '🤝',
+        alt: org.position || 'Dokumentasi organisasi',
+        lightbox: false,
+      })}
       <div class="exp-card-position">${ph(org.position)}</div>
       <div class="exp-card-institution">${ph(org.organization)}</div>
       <div class="exp-card-period">${periodStr(org.period_start, org.period_end)}</div>
@@ -305,6 +496,7 @@ async function renderOrganizations() {
         <span class="exp-card-click-hint">Lihat detail →</span>
       </div>
     </div>`).join('');
+  initMediaPreviews(container);
 
   container.addEventListener('click', e => {
     const card = e.target.closest('[data-exp-idx]');
@@ -325,9 +517,12 @@ async function renderProjects() {
 
   container.innerHTML = data.map((proj, idx) => `
     <div class="project-card">
-      ${proj.thumbnail && !isP(proj.thumbnail)
-        ? `<img src="${esc(proj.thumbnail)}" alt="${esc(proj.title)}" class="project-thumb" loading="lazy" onerror="this.outerHTML='<div class=\\'project-thumb-placeholder\\'>📊</div>'">`
-        : `<div class="project-thumb-placeholder">📊</div>`}
+      ${renderThumbnail(proj.thumbnail, proj.media?.pdf, {
+        containerClass: 'project-thumb',
+        placeholderClass: 'project-thumb-placeholder',
+        placeholder: '📊',
+        alt: proj.title || 'Thumbnail proyek',
+      })}
       <div class="project-body">
         <div class="project-category">${esc(proj.category || '')}</div>
         <div class="project-title">${esc(proj.title)}</div>
@@ -340,6 +535,7 @@ async function renderProjects() {
         </div>
       </div>
     </div>`).join('');
+  initMediaPreviews(container);
 
   container.addEventListener('click', e => {
     const btn = e.target.closest('[data-proj-idx]');
@@ -377,7 +573,12 @@ function openProjectModal(idx) {
   }
 
   openModal(`
-    ${proj.thumbnail && !isP(proj.thumbnail) ? `<img src="${esc(proj.thumbnail)}" alt="${esc(proj.title)}" style="width:100%;max-height:260px;object-fit:cover;border-radius:var(--radius-lg) var(--radius-lg) 0 0">` : ''}
+    ${renderThumbnail(proj.thumbnail, media.pdf, {
+      containerClass: 'project-detail-cover',
+      placeholderClass: 'project-thumb-placeholder',
+      placeholder: '📊',
+      alt: proj.title || 'Thumbnail proyek',
+    })}
     <div class="modal-inner">
       <div class="modal-badge">${esc(proj.category || '')}</div>
       <div class="modal-title">${esc(proj.title)}</div>
@@ -416,11 +617,12 @@ async function renderCertificates() {
 
   container.innerHTML = data.map(cert => `
     <div class="cert-card">
-      <div class="cert-thumb-wrap" data-lightbox-src="${esc(cert.photo || '')}" style="cursor:${cert.photo && !isP(cert.photo) ? 'pointer' : 'default'}">
-        ${cert.photo && !isP(cert.photo)
-          ? `<img src="${esc(cert.photo)}" alt="${esc(cert.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'cert-thumb-placeholder\\'>🏆</div>'">`
-          : `<div class="cert-thumb-placeholder">🏆</div>`}
-      </div>
+      ${renderThumbnail(cert.photo, cert.pdf, {
+        containerClass: 'cert-thumb-wrap',
+        placeholderClass: 'cert-thumb-placeholder',
+        placeholder: '🏆',
+        alt: cert.name || 'Sertifikat',
+      })}
       <div class="cert-body">
         <div class="cert-name">${esc(cert.name)}</div>
         <div class="cert-issuer">${ph(cert.issuer)}</div>
@@ -433,11 +635,7 @@ async function renderCertificates() {
         </div>
       </div>
     </div>`).join('');
-
-  container.addEventListener('click', e => {
-    const el = e.target.closest('[data-lightbox-src]');
-    if (el && el.dataset.lightboxSrc && !isP(el.dataset.lightboxSrc)) openLightbox(el.dataset.lightboxSrc);
-  });
+  initMediaPreviews(container);
 }
 
 /* ── TRAININGS ────────────────────────────────────────────── */
@@ -449,11 +647,12 @@ async function renderTrainings() {
 
   container.innerHTML = data.map(tr => `
     <div class="cert-card">
-      <div class="cert-thumb-wrap" data-lightbox-src="${esc(tr.certificate_photo || tr.photo || '')}" style="cursor:${(tr.certificate_photo || tr.photo) && !isP(tr.certificate_photo || tr.photo) ? 'pointer' : 'default'}">
-        ${(tr.certificate_photo || tr.photo) && !isP(tr.certificate_photo || tr.photo)
-          ? `<img src="${esc(tr.certificate_photo || tr.photo)}" alt="${esc(tr.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'cert-thumb-placeholder\\'>📚</div>'">`
-          : `<div class="cert-thumb-placeholder">📚</div>`}
-      </div>
+      ${renderThumbnail(tr.certificate_photo || tr.photo, tr.certificate_pdf, {
+        containerClass: 'cert-thumb-wrap',
+        placeholderClass: 'cert-thumb-placeholder',
+        placeholder: '📚',
+        alt: tr.name || 'Dokumentasi pelatihan',
+      })}
       <div class="cert-body">
         <div class="cert-name">${ph(tr.name)}</div>
         <div class="cert-issuer">${ph(tr.organizer)}</div>
@@ -466,11 +665,7 @@ async function renderTrainings() {
         </div>
       </div>
     </div>`).join('');
-
-  container.addEventListener('click', e => {
-    const el = e.target.closest('[data-lightbox-src]');
-    if (el && el.dataset.lightboxSrc && !isP(el.dataset.lightboxSrc)) openLightbox(el.dataset.lightboxSrc);
-  });
+  initMediaPreviews(container);
 }
 
 /* ── ACHIEVEMENTS ────────────────────────────────────────── */
@@ -506,6 +701,12 @@ async function renderPublications() {
 
   container.innerHTML = data.map((pub, idx) => `
     <div class="pub-card" data-pub-idx="${idx}">
+      ${renderThumbnail(pub.poster || pub.photos?.[0], pub.pdf, {
+        containerClass: 'pub-card-cover',
+        placeholderClass: 'pub-card-placeholder',
+        placeholder: '📄',
+        alt: pub.title || 'Poster publikasi',
+      })}
       <div class="pub-title">${ph(pub.title)}</div>
       <div class="pub-authors">${ph(pub.authors)}</div>
       <div class="pub-venue">
@@ -520,10 +721,11 @@ async function renderPublications() {
       </div>
       <div class="pub-open-hint">Klik untuk detail →</div>
     </div>`).join('');
+  initMediaPreviews(container);
 
   container.addEventListener('click', e => {
     const card = e.target.closest('[data-pub-idx]');
-    if (card && !e.target.closest('a')) openPubModal(+card.dataset.pubIdx);
+    if (card && !e.target.closest('a, [data-lightbox-src]')) openPubModal(+card.dataset.pubIdx);
   });
 }
 
@@ -548,6 +750,8 @@ function openPubModal(idx) {
     <div class="modal-title">${ph(pub.title)}</div>
     <div class="modal-subtitle">${ph(pub.authors)}</div>
     <div class="modal-period">${isP(pub.venue) ? '' : esc(pub.venue)}${pub.year && !isP(pub.year) ? ` · ${esc(pub.year)}` : ''}</div>
+    ${pub.poster && !isP(pub.poster)
+      ? `<img class="publication-poster" src="${esc(pub.poster)}" alt="${esc(pub.title)}" data-lightbox-src="${esc(pub.poster)}">` : ''}
 
     ${pub.abstract && !isP(pub.abstract)
       ? `<div class="modal-section"><div class="modal-section-label">Abstrak</div><p class="modal-text">${esc(pub.abstract)}</p></div>` : ''}

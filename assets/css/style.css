@@ -286,6 +286,12 @@ section { padding: 80px 0; }
   transition: transform var(--transition), box-shadow var(--transition);
   display: flex; flex-direction: column; gap: 8px;
 }
+.exp-card-cover { width: calc(100% + 52px); height: 150px; margin: -24px -26px 8px; }
+.exp-card-placeholder {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--light-blue), var(--surface));
+  color: var(--accent); font-size: 2.4rem;
+}
 .exp-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 #pengalaman-organisasi .exp-card { background: var(--surface); }
 .exp-card-position { font-size: 1rem; font-weight: 700; color: var(--navy); line-height: 1.35; }
@@ -298,6 +304,8 @@ section { padding: 80px 0; }
 .exp-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; flex: 1; }
 .exp-card-footer { display: flex; align-items: center; justify-content: flex-end; margin-top: 6px; }
 .exp-card-click-hint { font-size: 0.78rem; color: var(--accent); font-weight: 600; }
+.modal-location { font-size: 0.82rem; color: var(--text-muted); margin: 4px 0 12px; }
+.exp-modal-cover { width: 100%; max-height: 320px; object-fit: contain; background: var(--light-blue); border-radius: var(--radius); cursor: pointer; }
 
 /* ============================================================
    MODAL DETAIL (unified)
@@ -354,6 +362,13 @@ section { padding: 80px 0; }
 .modal-embed { margin-top: 12px; border-radius: var(--radius); overflow: hidden; }
 .modal-embed iframe { width: 100%; height: 320px; border: none; }
 .modal-pdf-preview { width: 100%; height: 300px; border: 1px solid var(--border); border-radius: var(--radius); }
+.media-thumb { position: relative; overflow: hidden; }
+.media-thumb-image { display: block; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+.pdf-preview { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--surface); }
+.pdf-preview-status { padding: 12px; color: var(--text-muted); font-size: 0.78rem; text-align: center; }
+.pdf-preview--error { background: var(--light-blue); }
+.pdf-preview-image { display: block; width: 100%; height: 100%; object-fit: contain; background: var(--white); }
+.pdf-preview-image[hidden] { display: none; }
 
 /* ============================================================
    PROJECTS
@@ -371,12 +386,13 @@ section { padding: 80px 0; }
   transition: transform var(--transition), box-shadow var(--transition);
 }
 .project-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.project-thumb { width: 100%; height: 180px; object-fit: cover; background: var(--light-blue); }
+.project-thumb { width: 100%; height: 180px; background: var(--light-blue); }
 .project-thumb-placeholder {
-  width: 100%; height: 180px; background: var(--light-blue);
+  width: 100%; height: 100%; background: var(--light-blue);
   display: flex; align-items: center; justify-content: center;
   color: var(--accent); font-size: 2.5rem;
 }
+.project-detail-cover { width: 100%; height: 260px; background: var(--light-blue); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
 .project-body { padding: 20px 22px; flex: 1; display: flex; flex-direction: column; }
 .project-category { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--accent); margin-bottom: 5px; }
 .project-title { font-size: 0.97rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.4; }
@@ -406,6 +422,7 @@ section { padding: 80px 0; }
   display: flex; align-items: center; justify-content: center;
 }
 .cert-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
+.cert-thumb-wrap .pdf-preview-image { object-fit: contain; }
 .cert-thumb-placeholder { color: var(--accent); font-size: 2.5rem; }
 .cert-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; }
 .cert-name { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
@@ -422,6 +439,14 @@ section { padding: 80px 0; }
 }
 .lightbox-overlay.open { display: flex; }
 .lightbox-overlay img { max-width: 92vw; max-height: 90vh; border-radius: var(--radius); cursor: default; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.55);
+  border-radius: 50%; background: rgba(20,43,74,0.7); color: var(--white);
+  font-size: 2rem; line-height: 1; cursor: pointer; z-index: 1;
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
 .lightbox-close {
   position: absolute; top: 16px; right: 20px;
   color: var(--white); font-size: 2rem;
@@ -461,9 +486,12 @@ section { padding: 80px 0; }
   background: var(--white); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: 22px 26px;
   box-shadow: var(--shadow); transition: box-shadow var(--transition);
-  cursor: pointer;
+  cursor: pointer; overflow: hidden;
 }
+.pub-card-cover { width: calc(100% + 52px); height: 190px; margin: -22px -26px 18px; background: var(--light-blue); }
+.pub-card-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 2.5rem; }
 .pub-card:hover { box-shadow: var(--shadow-md); }
+.publication-poster { display: block; max-width: 100%; max-height: 420px; object-fit: contain; margin: 16px auto; border-radius: var(--radius); cursor: pointer; }
 .pub-title { font-size: 1.02rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; line-height: 1.45; }
 .pub-authors { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 3px; }
 .pub-venue { font-size: 0.86rem; color: var(--accent); font-weight: 500; margin-bottom: 10px; }
@@ -506,6 +534,10 @@ footer a:hover { color: var(--white); }
   section { padding: 56px 0; }
   .modal-inner { padding: 8px 16px 24px; }
   .modal-embed iframe { height: 240px; }
+  .lightbox-overlay img { max-width: calc(100vw - 112px); }
+  .lightbox-nav { width: 42px; height: 42px; }
+  .lightbox-prev { left: 10px; }
+  .lightbox-next { right: 10px; }
   .projects-grid { grid-template-columns: 1fr; }
   .certs-grid { grid-template-columns: 1fr; }
   .achievements-grid { grid-template-columns: 1fr; }

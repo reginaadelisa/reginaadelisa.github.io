@@ -233,9 +233,16 @@
 ══════════════════════════════════════════════════ -->
 <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Tampilan gambar">
   <button class="lightbox-close" id="lightbox-close" aria-label="Tutup">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Gambar sebelumnya" hidden>‹</button>
   <img id="lightbox-img" src="" alt="Gambar diperbesar" />
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Gambar berikutnya" hidden>›</button>
 </div>
 
+<script type="module">
+  import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.mjs";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.5.438/build/pdf.worker.mjs";
+  window.pdfjsLib = pdfjsLib;
+</script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
