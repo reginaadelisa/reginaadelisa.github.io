@@ -217,13 +217,45 @@ content:
             options:
               media: "work-images"
               multiple: {}
-          - name: "pdf"
-            label: "Dokumen Pendukung PDF (opsional)"
+          - name: "documents"
+            label: "Dokumen Pendukung PDF"
+            type: "object"
+            list: true
+            fields:
+              - name: "title"
+                label: "Judul Dokumen"
+                type: "string"
+              - name: "file"
+                label: "File PDF"
+                type: "file"
+                options:
+                  media: "documents"
+                  extensions: ["pdf"]
+          - name: "certificate_pdf"
+            label: "Sertifikat PDF (opsional)"
             type: "file"
             options:
               media: "documents"
               extensions: ["pdf"]
-
+          - name: "certificate_image"
+            label: "Sertifikat Gambar (opsional)"
+            type: "image"
+            options:
+              media: "certificate-images"
+          - name: "links"
+            label: "Dokumentasi & Tautan Pendukung"
+            type: "object"
+            list: true
+            fields:
+              - name: "title"
+                label: "Judul Tautan"
+                type: "string"
+              - name: "type"
+                label: "Jenis Tautan (misal: YouTube, Publikasi/Jurnal, Website/Proyek, Berita/Media, Google Drive, Lainnya)"
+                type: "string"
+              - name: "url"
+                label: "URL Tautan"
+                type: "string"
   - name: "pengalaman-organisasi"
     label: "Pengalaman Organisasi"
     path: "content/organizations/organizations.json"
@@ -268,13 +300,45 @@ content:
             options:
               media: "organization-images"
               multiple: {}
-          - name: "pdf"
-            label: "Dokumen Pendukung PDF (opsional)"
+          - name: "documents"
+            label: "Dokumen Pendukung PDF"
+            type: "object"
+            list: true
+            fields:
+              - name: "title"
+                label: "Judul Dokumen"
+                type: "string"
+              - name: "file"
+                label: "File PDF"
+                type: "file"
+                options:
+                  media: "documents"
+                  extensions: ["pdf"]
+          - name: "certificate_pdf"
+            label: "Sertifikat PDF (opsional)"
             type: "file"
             options:
               media: "documents"
               extensions: ["pdf"]
-
+          - name: "certificate_image"
+            label: "Sertifikat Gambar (opsional)"
+            type: "image"
+            options:
+              media: "certificate-images"
+          - name: "links"
+            label: "Dokumentasi & Tautan Pendukung"
+            type: "object"
+            list: true
+            fields:
+              - name: "title"
+                label: "Judul Tautan"
+                type: "string"
+              - name: "type"
+                label: "Jenis Tautan (misal: YouTube, Publikasi/Jurnal, Website/Proyek, Berita/Media, Google Drive, Lainnya)"
+                type: "string"
+              - name: "url"
+                label: "URL Tautan"
+                type: "string"
   - name: "projects"
     label: "Projects"
     path: "content/projects/projects.json"

@@ -183,6 +183,166 @@ function renderGallery(photos) {
   </div>`;
 }
 
+function normalizeDocumentEntries(item) {
+  const docs = [];
+  const seen = new Set();
+
+  const addDoc = (title, file) => {
+    if (!file || isP(file)) return;
+    const normalizedFile = String(file).trim();
+    if (!normalizedFile || seen.has(normalizedFile)) return;
+    seen.add(normalizedFile);
+    docs.push({
+      title: title && !isP(title) ? String(title).trim() : 'Dokumen pendukung',
+      file: normalizedFile,
+    });
+  };
+
+  if (Array.isArray(item?.documents)) {
+    item.documents.forEach(doc => {
+      if (!doc || typeof doc !== 'object') {
+        if (typeof doc === 'string') addDoc('Dokumen pendukung', doc);
+        return;
+      }
+      addDoc(doc.title || doc.name || 'Dokumen pendukung', doc.file || doc.path || doc.url);
+    });
+  }
+
+  if (item?.pdf && !isP(item.pdf)) addDoc(item.document_title || 'Dokumen pendukung', item.pdf);
+
+  return docs;
+}
+
+function normalizeCertificateMedia(item) {
+  const image = item?.certificate_image || item?.certificate_photo || item?.certificate_img || item?.certificate;
+  const pdf = item?.certificate_pdf || item?.certificate_file || item?.certificate_document || item?.certificateDoc;
+
+  return {
+    image: image && !isP(image) ? String(image).trim() : '',
+    pdf: pdf && !isP(pdf) ? String(pdf).trim() : '',
+  };
+}
+
+function normalizeHttpUrl(value) {
+  if (typeof value !== 'string' || !value.trim() || isP(value)) return '';
+
+  try {
+    const url = new URL(value.trim());
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+function normalizeExternalLinks(item) {
+  if (!item || !Array.isArray(item.links)) return [];
+
+  return item.links
+    .map(link => {
+      if (!link || (typeof link !== 'object' && typeof link !== 'string')) return null;
+      if (typeof link === 'string') {
+        const url = normalizeHttpUrl(link);
+        return url ? { title: 'Tautan', type: 'Lainnya', url } : null;
+      }
+
+      const url = normalizeHttpUrl(link.url || link.href || link.link || link.target);
+      if (!url) return null;
+      const title = link.title || link.label || link.name || 'Tautan';
+      const type = link.type || 'Lainnya';
+      return { title: String(title).trim(), type: String(type).trim() || 'Lainnya', url };
+    })
+    .filter(Boolean);
+}
+
+function getLinkTypeLabel(type) {
+  const value = String(type || '').trim().toLowerCase();
+  if (!value) return 'Lainnya';
+  if (value.includes('youtube')) return 'YouTube';
+  if (value.includes('publikasi') || value.includes('jurnal')) return 'Publikasi/Jurnal';
+  if (value.includes('website') || value.includes('proyek')) return 'Website/Proyek';
+  if (value.includes('berita') || value.includes('media')) return 'Berita/Media';
+  if (value.includes('drive') || value.includes('google')) return 'Google Drive';
+  return 'Lainnya';
+}
+
+function getLinkTypeIcon(type) {
+  const value = String(type || '').trim().toLowerCase();
+  if (value.includes('youtube')) return '&#9654;';
+  if (value.includes('publikasi') || value.includes('jurnal')) return '&#128218;';
+  if (value.includes('website') || value.includes('proyek')) return '&#127760;';
+  if (value.includes('berita') || value.includes('media')) return '&#128240;';
+  if (value.includes('drive') || value.includes('google')) return '&#128193;';
+  return '&#128279;';
+}
+
+function renderSupportDocumentList(item) {
+  const docs = normalizeDocumentEntries(item);
+  if (!docs.length) return '';
+
+  return `
+    <div class="modal-section">
+      <div class="modal-section-label">Dokumen Pendukung</div>
+      <div class="modal-doc-list">
+        ${docs.map(doc => `
+          <a href="${esc(doc.file)}" target="_blank" rel="noopener noreferrer" class="modal-doc-link">
+            <span class="modal-doc-icon">&#128196;</span>
+            <span>${esc(doc.title || 'Dokumen pendukung')}</span>
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSupportCertificates(item) {
+  const cert = normalizeCertificateMedia(item);
+  if (!cert.image && !cert.pdf) return '';
+
+  const preview = cert.image
+    ? `<img src="${esc(cert.image)}" alt="Sertifikat" class="certificate-preview-image" loading="lazy" data-lightbox-src="${esc(cert.image)}">`
+    : '';
+
+  const pdfLink = cert.pdf
+    ? `<a href="${esc(cert.pdf)}" target="_blank" rel="noopener noreferrer" class="modal-doc-link">
+        <span class="modal-doc-icon">&#128206;</span>
+        <span>Buka Sertifikat PDF</span>
+      </a>`
+    : '';
+
+  return `
+    <div class="modal-section">
+      <div class="modal-section-label">Sertifikat</div>
+      <div class="modal-doc-list">
+        ${preview ? `<div class="certificate-preview">${preview}</div>` : ''}
+        ${pdfLink}
+      </div>
+    </div>
+  `;
+}
+
+function renderSupportLinks(item) {
+  const links = normalizeExternalLinks(item);
+  if (!links.length) return '';
+
+  return `
+    <div class="modal-section">
+      <div class="modal-section-label">Dokumentasi dan Tautan Pendukung</div>
+      <div class="modal-doc-list">
+        ${links.map(link => {
+          const type = getLinkTypeLabel(link.type);
+          return `
+            <a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer" class="modal-doc-link">
+              <span class="modal-doc-icon">${getLinkTypeIcon(type)}</span>
+              <span>${esc(link.title || type)}</span>
+              <small>${esc(type)}</small>
+            </a>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
 /* ── MODAL ────────────────────────────────────────────────── */
 function openModal(html) {
   const overlay = document.getElementById('detail-modal');
@@ -404,8 +564,6 @@ function buildExpModal(item, isOrg = false) {
     ? ` <span style="color:var(--text-muted)">· ${esc(item.department)}</span>` : '';
   const locationLine = item.location && !isP(item.location)
     ? `<div class="modal-location">${esc(item.location)}</div>` : '';
-  const pdfLink = item.pdf && !isP(item.pdf)
-    ? `<div class="modal-section"><a href="${esc(item.pdf)}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Buka PDF pendukung</a></div>` : '';
   const cover = item.cover_photo && !isP(item.cover_photo)
     ? `<img class="exp-modal-cover" src="${esc(item.cover_photo)}" alt="${esc(item.position)}" data-lightbox-src="${esc(item.cover_photo)}">` : '';
 
@@ -421,6 +579,10 @@ function buildExpModal(item, isOrg = false) {
         <p class="modal-text">${esc(item.contributions)}</p>
        </div>` : '';
 
+  const docHtml = renderSupportDocumentList(item);
+  const certHtml = renderSupportCertificates(item);
+  const linksHtml = renderSupportLinks(item);
+
   return `<div class="modal-inner">
     <div class="modal-badge">${isOrg ? 'Pengalaman Organisasi' : 'Pengalaman Kerja'}</div>
     <div class="modal-title">${ph(item.position)}</div>
@@ -432,7 +594,9 @@ function buildExpModal(item, isOrg = false) {
       ? `<div class="modal-section"><div class="modal-section-label">Deskripsi</div><p class="modal-text">${esc(item.description)}</p></div>` : ''}
     ${respHtml}
     ${contribHtml}
-    ${pdfLink}
+    ${docHtml}
+    ${certHtml}
+    ${linksHtml}
     ${renderGallery(item.photos)}
   </div>`;
 }
