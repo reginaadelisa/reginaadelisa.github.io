@@ -2,9 +2,9 @@
   "publications": [
     {
       "title": "Analysis of Effective Policy Strategies to Adress Multidimensional Stunting Using the Biplot Method in Bengkulu Province",
+      "venue": "JSDS: JOURNAL OF STATISTICS AND DATA SCIENCE",
       "authors": "Regina Adelisa, Vivi Elvira Sahputri Syah, Gihon Nakata Silaen, Firdaus, Teuku Fahrulriza, Eko Fajariyanto, and Novrian Pratama",
       "year": "2025",
-      "venue": "JSDS: JOURNAL OF STATISTICS AND DATA SCIENCE",
       "abstract": "This  study  aims  to  analyze  the  factors  contributing  to  stunting  in  Bengkulu  Province.  The method  used  is  biplot  analysis,  by  reducing  the  Principal  Component  Analysis  (PCA) dimensions  into  two  components.  A  quantitative  approach  was  employed,  involving  tenvariables representing health, nutrition, education, housing, food security, and social protection factors.  The  results  indicate  that  Bengkulu  City  has  characteristics  that  are  significantly different  from  other  regencies.  The  key  contributing  factors  include  limited  access  to  basic health  services  (particularly  the  availability  of  skilled  birth  attendants  and  immunization coverage),  high  levels  of  food  insecurity,  low  access  to  proper  sanitation  and  safe  drinking water, limited practice of exclusive breastfeeding, and low utilization of government assistance programs such as BPJS Kesehatan (National Health Insurance) and KPS/KKS (Social Welfare Cards). It is expected that the findings of this study can provide valuable insights and contribute to efforts inreducing the prevalence of stunting in Bengkulu Province.",
       "doi": "https://doi.org/10.33369/jsds.v4i2.45684",
       "url": "https://journal.unib.ac.id/jsds/article/view/45684",
@@ -13,8 +13,8 @@
     },
     {
       "title": "Perbandingan Regresi Nonparametrik Spline Truncated dan Kernel Gaussian dalam Menganalisis Faktor-Faktor Penentu Indeks Pembangunan Manusia (IPM) di Indonesia",
-      "year": "2025",
       "venue": "JURNAL GAUSSIAN",
+      "year": "2025",
       "abstract": "The  Human  Development  Index  (HDI)  is  an  important indicator for measuring the quality of development in a  region. This study  compares  two  nonparametric  regression  approaches,  namely truncated   spline   regression   and   Gaussian   kernel   regression,   in analyzing  the  factors  influencing  HDI  in  Indonesia  in  2024.The independent  variables  used  include  Expected  Years  of  Schooling (HLS), Mean Years of Schooling (RRLS), and the percentage of the poor  population  (PPM).  Nonparametric  regression  is  chosen  for  itsability  to  capture  complex  relationships  between  variables  without strict  linearity  assumptions.The  results  show  that  both  methods effectively  model  the  relationship  between  the  variables  and  HDI. Truncated  spline  regression  performs  better  in  detecting  structural changes, while kernel regression is more flexible in capturing smooth relationships. Model evaluation using the coefficient of determination (R²)  and  mean  squared  error  (MSE)  indicates  that  truncated  spline yields an R² of 92.79% and an MSE of 1.8617, while Gaussian kernel regression  results  in  an  R²  of  82.25%  and  an  MSE  of  3.6837.Therefore, truncated spline  regression proves to be  more  accurate  in modeling the relationship between determining factors and HDI, and it can serve as a more suitable alternative for analyzing complex and nonlinear patterns in human development policy research",
       "doi": "https://doi.org/10.14710/j.gauss.14.2.554-564",
       "url": "https://ejournal3.undip.ac.id/index.php/gaussian/article/view/51349",
@@ -22,13 +22,28 @@
     },
     {
       "title": "Analisis Hierarchical Clustering (Single Linkage) dan K-Medoids pada Data Penghasilan dan Demografi Area Komunitas Chicago",
-      "year": "2025",
       "venue": "JURNAL FOURIER",
+      "year": "2025",
       "abstract": "This  study  analyzes  the  Hierarchical  Clustering  Single  Linkage  and  K-Medoids  methods  in  clustering  income  and demographic  data  of  communities  in  Chicago.  Using  secondary  data  from  the  Kaggle  website,  this  study  clusters  77 community  areas  based  on  similarities  in  social  and  economic  characteristics.  The  analysis  using  the  Hierarchical Clustering Single Linkage method reveals that one community area is  isolated in the second cluster, while the rest are grouped  into  a  single  main  cluster.  In  contrast,  the  K-Medoids  method  produces  two  clusters  with  a  more  balanced distribution. Based on clustering visualization, the K-Medoids method is considered superior as it provides a more evenly distributed  classification.  However,  when  evaluated  using  the  Silhouette  Score  and  Dunn  Index,  the  Hierarchical Clustering Single Linkage method outperforms K-Medoids due to its higher values, indicating clearer cluster separation. Thus,  the  choice  of  the  best  method  depends  on  the  analytical  objective,  where  K-Medoids  is  more  suitable  for interpreting  a  more  balanced  data  distribution,  while  Hierarchical  Clustering  Single  Linkage  is  optimal  for  achieving distinct cluster separation.",
       "url": "https://fourier.or.id/index.php/FOURIER/article/view/238",
       "pdf": "assets/documents/Publikasi_Fourier.pdf"
     }
   ],
-  "conferences": [],
-  "intellectual_properties": []
+  "conferences": [
+    {
+      "article_title": "Pemodelan Geographically Weighted Nonparametric Regression  (GWNR) dengan Pendekatan Penalized Spline pada Kemiskinan Wilayah Sumatra 2024",
+      "conference_name": "Mathematics and Statistics Expo (MSE#2)",
+      "theme": "STEM untuk Masa Depan Berkelanjutan: Integrasi Sains, Data, dan Kecerdasan Artifisial",
+      "organizer": "Jurusan Matematika FMIPA UNIB",
+      "date": "2 November 2026",
+      "presentation_type": "Oral Presentation",
+      "authors": "Regina Adelisa",
+      "photos": [
+        "assets/images/publications/mse poster.jpg",
+        "assets/images/publications/sampul depan mse.jpg",
+        "assets/images/publications/dokumentasi mse.jpg"
+      ],
+      "certificate_pdf": "assets/documents/Sertifikat_MSE#2_ST_15_Regina Adelisa.pdf"
+    }
+  ]
 }
