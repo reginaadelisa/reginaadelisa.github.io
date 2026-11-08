@@ -863,9 +863,23 @@ function normalizeAchievementDocuments(ach) {
       }
     });
   }
-  if (ach.certificate && !isP(ach.certificate)) addDocument('Sertifikat', ach.certificate);
-
   return documents;
+}
+
+function renderAchievementCertificate(ach) {
+  const certificate = normalizeResearchAsset(ach.certificate);
+  if (!certificate) return '';
+
+  return `<div class="modal-section">
+    <div class="modal-section-label">File Sertifikat</div>
+    <div class="achievement-document">
+      <div class="achievement-document-header">
+        <strong>Sertifikat</strong>
+        <a href="${esc(certificate)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka PDF</a>
+      </div>
+      <embed src="${esc(certificate)}" type="application/pdf" class="modal-pdf-preview achievement-pdf-preview" title="Sertifikat">
+    </div>
+  </div>`;
 }
 
 function normalizeAchievementLinks(ach) {
@@ -935,6 +949,7 @@ function buildAchievementModal(ach) {
     ${ach.achievement && !isP(ach.achievement) ? `<div style="margin:8px 0 12px"><span class="achievement-badge">${esc(ach.achievement)}</span></div>` : ''}
     ${ach.description && !isP(ach.description) ? `<div class="modal-section"><div class="modal-section-label">Deskripsi</div><p class="modal-text">${esc(ach.description)}</p></div>` : ''}
     ${renderGallery(photos)}
+    ${renderAchievementCertificate(ach)}
     ${renderAchievementDocuments(ach)}
     ${renderAchievementLinks(ach)}
   </div>`;

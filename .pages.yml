@@ -551,17 +551,12 @@ content:
             label: "Deskripsi"
             type: "text"
           - name: "cover_image"
-            label: "Foto Sampul (opsional)"
-            type: "image"
-            options:
-              media: "achievement-images"
-          - name: "photo"
-            label: "Foto Dokumentasi (kompatibilitas data lama)"
+            label: "Foto Sampul"
             type: "image"
             options:
               media: "achievement-images"
           - name: "photos"
-            label: "Galeri Foto Dokumentasi"
+            label: "Foto Dokumentasi"
             type: "image"
             options:
               media: "achievement-images"
@@ -592,7 +587,7 @@ content:
                 label: "URL (HTTP/HTTPS)"
                 type: "string"
           - name: "certificate"
-            label: "File Sertifikat (kompatibilitas data lama)"
+            label: "File Sertifikat"
             type: "file"
             options:
               media: "documents"
