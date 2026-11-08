@@ -1037,34 +1037,38 @@ function renderPublicationCard(pub, idx) {
     publicationUrl ? `<a href="${esc(publicationUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Publikasi</a>` : '',
     pdf ? `<a href="${esc(pdf)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">PDF</a>` : '',
   ].filter(Boolean);
+  const poster = normalizeResearchAsset(pub.poster) || normalizeResearchAsset(pub.photos?.[0]);
 
-  return `<div class="pub-card" data-research-category="publications" data-research-idx="${idx}">
-    ${renderThumbnail(normalizeResearchAsset(pub.poster) || normalizeResearchAsset(pub.photos?.[0]), pdf, {
-      containerClass: 'pub-card-cover',
-      placeholderClass: 'pub-card-placeholder',
-      placeholder: '📄',
-      alt: pub.title || 'Publikasi',
-    })}
+  return `<div class="pub-card pub-card--publication" data-research-category="publications" data-research-idx="${idx}">
+    ${pdf
+      ? renderPublicationPdfView(pdf, true)
+      : renderThumbnail(poster, '', {
+        containerClass: 'pub-card-cover',
+        placeholderClass: 'pub-card-placeholder',
+        placeholder: '📄',
+        alt: pub.title || 'Publikasi',
+      })}
     ${pub.title && !isP(pub.title) ? `<div class="pub-title">${esc(pub.title)}</div>` : ''}
     ${venue.length ? `<div class="pub-venue">${venue.map(esc).join(' · ')}</div>` : ''}
     ${authors ? `<div class="pub-authors">${esc(authors)}</div>` : ''}
     ${details.length ? `<div class="pub-authors">${details.map(esc).join(' · ')}</div>` : ''}
     ${pub.abstract && !isP(pub.abstract) ? `<div class="pub-abstract">${esc(pub.abstract)}</div>` : ''}
     ${actions.length ? `<div class="pub-actions">${actions.join('')}</div>` : ''}
-    <div class="pub-open-hint">Klik untuk detail →</div>
+    <button type="button" class="btn btn-sm btn-outline pub-detail-button">Detail publikasi</button>
   </div>`;
 }
 
 function renderConferenceCard(conference, idx) {
   const proceedingsUrl = normalizeHttpUrl(conference.proceedings_url);
+  const coverImage = normalizeResearchAsset(conference.photos?.[0]);
   const meta = [
     conference.organizer,
     conference.date,
     conference.presentation_type,
   ].filter(value => value && !isP(value));
   return `<div class="pub-card" data-research-category="conferences" data-research-idx="${idx}">
-    ${renderThumbnail(normalizeResearchAsset(conference.photos?.[0]), '', {
-      containerClass: 'pub-card-cover',
+    ${renderThumbnail(coverImage, '', {
+      containerClass: `pub-card-cover${coverImage ? ' pub-card-cover--conference' : ''}`,
       placeholderClass: 'pub-card-placeholder',
       placeholder: '🎤',
       alt: conference.conference_name || 'Dokumentasi konferensi',
@@ -1119,6 +1123,7 @@ function renderResearchCards() {
   };
   container.innerHTML = data.map(renderers[activeResearchCategory]).join('');
   initMediaPreviews(container);
+  if (activeResearchCategory === 'publications') initPublicationPdfViewers(container);
 }
 
 async function renderPublications() {
@@ -1148,22 +1153,30 @@ async function renderPublications() {
 
   container.addEventListener('click', e => {
     const card = e.target.closest('[data-research-idx]');
-    if (card && !e.target.closest('a, [data-lightbox-src]')) {
+    if (card && !e.target.closest('a, [data-lightbox-src], .publication-pdf-viewer')) {
       openResearchModal(card.dataset.researchCategory, Number(card.dataset.researchIdx));
     }
   });
 }
 
-function renderPublicationPdfView(pdf) {
+function renderPublicationPdfView(pdf, inCard = false) {
   const url = normalizeResearchAsset(pdf);
   if (!url) return '';
+  const viewerClass = `publication-pdf-viewer${inCard ? ' publication-pdf-viewer--card' : ''}`;
+  const viewer = `<div class="${viewerClass}" data-publication-pdf="${esc(url)}" role="region" aria-label="Preview PDF publikasi" tabindex="0">
+    <div class="publication-pdf-status" role="status">Memuat preview PDF…</div>
+    <div class="publication-pdf-pages"></div>
+  </div>`;
+  if (inCard) return `<div class="publication-pdf-card-preview">${viewer}</div>`;
+
   return `<div class="modal-section publication-pdf-section">
     <div class="modal-section-label">Preview PDF Publikasi</div>
-    <div class="publication-pdf-viewer" data-publication-pdf="${esc(url)}" role="region" aria-label="Preview PDF publikasi">
-      <div class="publication-pdf-status" role="status">Memuat preview PDF…</div>
-      <div class="publication-pdf-pages"></div>
-    </div>
+    ${viewer}
   </div>`;
+}
+
+function initPublicationPdfViewers(root = document) {
+  root.querySelectorAll('[data-publication-pdf]').forEach(loadPublicationPdfViewer);
 }
 
 async function loadPublicationPdfViewer(viewer) {
@@ -1202,7 +1215,7 @@ async function loadPublicationPdfViewer(viewer) {
         const page = await pdf.getPage(Number(pageNode.dataset.pageNumber));
         const baseViewport = page.getViewport({ scale: 1 });
         const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
-        const scale = (viewer.clientWidth / baseViewport.width) * pixelRatio;
+        const scale = (pageNode.clientWidth / baseViewport.width) * pixelRatio;
         const viewport = page.getViewport({ scale });
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
@@ -1268,7 +1281,7 @@ function openResearchModal(category, idx) {
     html = `<div class="modal-inner">
       <div class="modal-badge">Publikasi</div>
       <div class="modal-title">${ph(item.title)}</div>
-      ${item.authors && !isP(item.authors) ? `<div class="modal-subtitle">${esc(item.authors)}</div>` : ''}
+      ${item.authors && !isP(item.authors) ? `<div class="publication-modal-authors">${esc(item.authors)}</div>` : ''}
       ${citation ? `<div class="modal-period">${citation}</div>` : ''}
       ${poster ? renderResearchImage(poster, item.title || 'Cover publikasi', 'publication-poster') : ''}
       ${item.abstract && !isP(item.abstract) ? `<div class="modal-section"><div class="modal-section-label">Abstrak / Deskripsi</div><p class="modal-text">${esc(item.abstract)}</p></div>` : ''}
@@ -1277,7 +1290,6 @@ function openResearchModal(category, idx) {
       ${item.results_summary && !isP(item.results_summary) ? `<div class="modal-section"><div class="modal-section-label">Ringkasan Hasil</div><p class="modal-text">${esc(item.results_summary)}</p></div>` : ''}
       ${links.length ? `<div class="modal-section"><div class="modal-section-label">Tautan Publikasi</div><div class="modal-media-row">${links.join('')}</div></div>` : ''}
       ${videoId ? `<div class="modal-section"><div class="modal-section-label">Video</div><div class="modal-embed"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen title="Video publikasi"></iframe></div></div>` : ''}
-      ${pdf ? renderPublicationPdfView(pdf) : ''}
       ${renderGallery(item.photos)}
     </div>`;
   } else if (category === 'conferences') {
@@ -1314,8 +1326,7 @@ function openResearchModal(category, idx) {
   }
 
   openModal(html);
-  const pdfViewer = document.querySelector('#detail-modal-body [data-publication-pdf]');
-  if (pdfViewer) loadPublicationPdfViewer(pdfViewer);
+  initPublicationPdfViewers(document.getElementById('detail-modal-body'));
 }
 
 /* ── CONTACT ─────────────────────────────────────────────── */
