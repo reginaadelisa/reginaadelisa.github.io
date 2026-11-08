@@ -838,14 +838,134 @@ async function renderTrainings() {
 }
 
 /* ── ACHIEVEMENTS ────────────────────────────────────────── */
+function normalizeAchievementPhotos(ach) {
+  const photos = Array.isArray(ach.photos) ? [...ach.photos] : [];
+  if (ach.photo && !isP(ach.photo)) photos.unshift(ach.photo);
+  return [...new Set(photos.filter(photo => typeof photo === 'string' && !isP(photo)).map(photo => photo.trim()).filter(Boolean))];
+}
+
+function normalizeAchievementDocuments(ach) {
+  const documents = [];
+  const seen = new Set();
+  const addDocument = (title, file) => {
+    const path = normalizeResearchAsset(file);
+    if (!path || seen.has(path)) return;
+    seen.add(path);
+    documents.push({ title: title && !isP(title) ? String(title).trim() : 'Dokumen prestasi', file: path });
+  };
+
+  if (Array.isArray(ach.documents)) {
+    ach.documents.forEach(document => {
+      if (typeof document === 'string') {
+        addDocument('Dokumen prestasi', document);
+      } else if (document && typeof document === 'object') {
+        addDocument(document.title || document.name || 'Dokumen prestasi', document.file || document.path || document.url);
+      }
+    });
+  }
+  return documents;
+}
+
+function renderAchievementCertificate(ach) {
+  const certificate = normalizeResearchAsset(ach.certificate);
+  if (!certificate) return '';
+
+  return `<div class="modal-section">
+    <div class="modal-section-label">File Sertifikat</div>
+    <div class="achievement-document">
+      <div class="achievement-document-header">
+        <strong>Sertifikat</strong>
+        <a href="${esc(certificate)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka PDF</a>
+      </div>
+      <embed src="${esc(certificate)}" type="application/pdf" class="modal-pdf-preview achievement-pdf-preview" title="Sertifikat">
+    </div>
+  </div>`;
+}
+
+function normalizeAchievementLinks(ach) {
+  if (!Array.isArray(ach.links)) return [];
+  return ach.links
+    .map(link => {
+      if (!link || typeof link !== 'object') return null;
+      const url = normalizeHttpUrl(link.url || link.href);
+      if (!url) return null;
+      return {
+        label: link.label || link.title || link.name || url,
+        url,
+      };
+    })
+    .filter(Boolean);
+}
+
+function renderAchievementDocuments(ach) {
+  const documents = normalizeAchievementDocuments(ach);
+  if (!documents.length) return '';
+
+  return `<div class="modal-section">
+    <div class="modal-section-label">Dokumen PDF</div>
+    <div class="achievement-documents">
+      ${documents.map(document => `
+        <div class="achievement-document">
+          <div class="achievement-document-header">
+            <strong>${esc(document.title)}</strong>
+            <a href="${esc(document.file)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka PDF</a>
+          </div>
+          <embed src="${esc(document.file)}" type="application/pdf" class="modal-pdf-preview achievement-pdf-preview" title="${esc(document.title)}">
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function renderAchievementLinks(ach) {
+  const links = normalizeAchievementLinks(ach);
+  if (!links.length) return '';
+
+  return `<div class="modal-section">
+    <div class="modal-section-label">Tautan Pendukung</div>
+    <div class="modal-media-row">
+      ${links.map(link => `<a href="${esc(link.url)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">${esc(link.label)}</a>`).join('')}
+    </div>
+  </div>`;
+}
+
+function buildAchievementModal(ach) {
+  const cover = ach.cover_image && !isP(ach.cover_image)
+    ? `<img src="${esc(ach.cover_image)}" alt="${esc(ach.title || 'Foto sampul prestasi')}" class="achievement-modal-cover" data-lightbox-src="${esc(ach.cover_image)}" onerror="this.remove()">`
+    : '';
+  const meta = [
+    !isP(ach.organizer) ? ach.organizer : '',
+    !isP(ach.level) ? ach.level : '',
+    !isP(ach.date) ? ach.date : '',
+    !isP(ach.year) ? ach.year : '',
+  ].filter(Boolean);
+  const photos = normalizeAchievementPhotos(ach);
+
+  return `<div class="modal-inner">
+    ${cover}
+    <div class="modal-badge">Prestasi</div>
+    <div class="modal-title">${ph(ach.title)}</div>
+    ${meta.length ? `<div class="modal-location">${meta.map(esc).join(' · ')}</div>` : ''}
+    ${ach.achievement && !isP(ach.achievement) ? `<div style="margin:8px 0 12px"><span class="achievement-badge">${esc(ach.achievement)}</span></div>` : ''}
+    ${ach.description && !isP(ach.description) ? `<div class="modal-section"><div class="modal-section-label">Deskripsi</div><p class="modal-text">${esc(ach.description)}</p></div>` : ''}
+    ${renderGallery(photos)}
+    ${renderAchievementCertificate(ach)}
+    ${renderAchievementDocuments(ach)}
+    ${renderAchievementLinks(ach)}
+  </div>`;
+}
+
 async function renderAchievements() {
   const raw = await loadJSON('content/achievements/achievements.json');
   const container = document.getElementById('achievements-grid');
   if (!raw || !container) return;
   const data = Array.isArray(raw) ? raw : (raw.achievements || []);
 
-  container.innerHTML = data.map(ach => `
-    <div class="achievement-card">
+  container.innerHTML = data.map((ach, idx) => `
+    <div class="achievement-card" data-achievement-idx="${idx}">
+      ${ach.cover_image && !isP(ach.cover_image)
+        ? `<img src="${esc(ach.cover_image)}" alt="${esc(ach.title || 'Foto sampul prestasi')}" class="achievement-cover" loading="lazy" onerror="this.remove()">`
+        : ''}
       <div class="achievement-title">${ph(ach.title)}</div>
       <div class="achievement-meta">
         ${!isP(ach.organizer) ? esc(ach.organizer) : ''}
@@ -853,9 +973,14 @@ async function renderAchievements() {
       </div>
       ${ach.achievement ? `<div class="achievement-badge">${esc(ach.achievement)}</div>` : ''}
       <div class="achievement-desc">${ach.description && !isP(ach.description) ? esc(ach.description) : ''}</div>
-      ${ach.photo && !isP(ach.photo) ? `<img src="${esc(ach.photo)}" alt="Dokumentasi" class="achievement-photo" loading="lazy">` : ''}
-      ${ach.certificate && !isP(ach.certificate) ? `<div style="margin-top:10px"><a href="${esc(ach.certificate)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Lihat Sertifikat</a></div>` : ''}
+      <div class="pub-open-hint">Klik untuk detail →</div>
     </div>`).join('');
+
+  container.addEventListener('click', e => {
+    const card = e.target.closest('[data-achievement-idx]');
+    if (!card || e.target.closest('a, [data-lightbox-src]')) return;
+    openModal(buildAchievementModal(data[Number(card.dataset.achievementIdx)]));
+  });
 }
 
 /* ── PUBLICATIONS ────────────────────────────────────────── */

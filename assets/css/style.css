@@ -492,9 +492,17 @@ section { padding: 80px 0; }
   background: var(--surface); border: 1px solid var(--border);
   border-left: 4px solid var(--accent); border-radius: var(--radius-lg);
   padding: 22px 24px; box-shadow: var(--shadow);
-  transition: box-shadow var(--transition);
+  transition: box-shadow var(--transition); cursor: pointer;
 }
 .achievement-card:hover { box-shadow: var(--shadow-md); }
+.achievement-cover {
+  display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+  margin-bottom: 16px; border-radius: var(--radius);
+}
+.achievement-modal-cover {
+  display: block; width: 100%; max-height: 360px; aspect-ratio: 16 / 9;
+  object-fit: cover; margin: 8px 0 18px; border-radius: var(--radius); cursor: pointer;
+}
 .achievement-title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
 .achievement-meta { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 8px; }
 .achievement-badge {
@@ -504,6 +512,20 @@ section { padding: 80px 0; }
 }
 .achievement-desc { font-size: 0.87rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
 .achievement-photo { margin-top: 12px; border-radius: var(--radius); max-height: 180px; object-fit: cover; width: 100%; }
+.achievement-documents { display: grid; gap: 14px; }
+.achievement-document {
+  min-width: 0; padding: 12px; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--surface);
+}
+.achievement-document-header {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px; margin-bottom: 10px;
+}
+.achievement-document-header strong { color: var(--navy); font-size: 0.88rem; }
+.achievement-pdf-preview {
+  display: block; width: 100%; height: min(60vh, 520px);
+  border: 1px solid var(--border); border-radius: 6px; background: var(--white);
+}
 
 /* ============================================================
    PUBLICATIONS
