@@ -535,8 +535,14 @@ content:
           - name: "organizer"
             label: "Penyelenggara"
             type: "string"
+          - name: "level"
+            label: "Tingkat Kompetisi / Penghargaan (opsional)"
+            type: "string"
           - name: "year"
             label: "Tahun"
+            type: "string"
+          - name: "date"
+            label: "Tanggal / Periode (opsional)"
             type: "string"
           - name: "achievement"
             label: "Pencapaian (misal: Juara 1, Finalis)"
@@ -544,13 +550,49 @@ content:
           - name: "description"
             label: "Deskripsi"
             type: "text"
-          - name: "photo"
-            label: "Foto Dokumentasi"
+          - name: "cover_image"
+            label: "Foto Sampul (opsional)"
             type: "image"
             options:
               media: "achievement-images"
+          - name: "photo"
+            label: "Foto Dokumentasi (kompatibilitas data lama)"
+            type: "image"
+            options:
+              media: "achievement-images"
+          - name: "photos"
+            label: "Galeri Foto Dokumentasi"
+            type: "image"
+            options:
+              media: "achievement-images"
+              multiple: {}
+          - name: "documents"
+            label: "Dokumen PDF"
+            type: "object"
+            list: true
+            fields:
+              - name: "title"
+                label: "Nama / Judul Dokumen"
+                type: "string"
+              - name: "file"
+                label: "File PDF"
+                type: "file"
+                options:
+                  media: "documents"
+                  extensions: ["pdf"]
+          - name: "links"
+            label: "Tautan Eksternal"
+            type: "object"
+            list: true
+            fields:
+              - name: "label"
+                label: "Nama / Label Tautan"
+                type: "string"
+              - name: "url"
+                label: "URL (HTTP/HTTPS)"
+                type: "string"
           - name: "certificate"
-            label: "File Sertifikat"
+            label: "File Sertifikat (kompatibilitas data lama)"
             type: "file"
             options:
               media: "documents"
