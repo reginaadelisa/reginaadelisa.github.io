@@ -349,6 +349,10 @@ function openModal(html) {
   const body    = document.getElementById('detail-modal-body');
   if (!overlay || !body) return;
   body.innerHTML = html;
+  overlay.querySelector('.modal-box')?.classList.toggle(
+    'modal-box--publication',
+    Boolean(body.querySelector('.publication-pdf-viewer')),
+  );
   initMediaPreviews(body);
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -357,6 +361,7 @@ function openModal(html) {
 function closeModal() {
   const overlay = document.getElementById('detail-modal');
   if (overlay) overlay.classList.remove('open');
+  overlay?.querySelector('.modal-box')?.classList.remove('modal-box--publication');
   document.body.style.overflow = document.getElementById('lightbox')?.classList.contains('open') ? 'hidden' : '';
 }
 
@@ -854,81 +859,338 @@ async function renderAchievements() {
 }
 
 /* ── PUBLICATIONS ────────────────────────────────────────── */
-let allPubs = [];
+const researchData = {
+  publications: [],
+  conferences: [],
+  intellectual_properties: [],
+};
+let activeResearchCategory = 'publications';
+
+function normalizeResearchAsset(value) {
+  if (typeof value !== 'string' || !value.trim() || isP(value)) return '';
+  const asset = value.trim();
+  if (/^[a-z][a-z\d+.-]*:/i.test(asset) || asset.startsWith('//')) {
+    return normalizeHttpUrl(asset);
+  }
+  return asset;
+}
+
+function getPublicationDoiUrl(doi) {
+  if (typeof doi !== 'string' || !doi.trim() || isP(doi)) return '';
+  const value = doi.trim();
+  return normalizeHttpUrl(value) || normalizeHttpUrl(`https://doi.org/${encodeURI(value)}`);
+}
+
+function renderResearchImage(image, alt, className = 'research-detail-image') {
+  const src = normalizeResearchAsset(image);
+  return src
+    ? `<img class="${className}" src="${esc(src)}" alt="${esc(alt)}" loading="lazy" data-lightbox-src="${esc(src)}">`
+    : '';
+}
+
+function renderResearchCertificate(item) {
+  const image = renderResearchImage(item.certificate_image, 'Sertifikat', 'research-certificate-image');
+  const pdf = normalizeResearchAsset(item.certificate_pdf);
+  if (!image && !pdf) return '';
+
+  return `<div class="modal-section">
+    <div class="modal-section-label">Sertifikat</div>
+    ${image ? `<div class="research-certificate-preview">${image}</div>` : ''}
+    ${pdf ? `<div class="modal-media-row"><a href="${esc(pdf)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka Sertifikat PDF</a></div>` : ''}
+  </div>`;
+}
+
+function renderPublicationCard(pub, idx) {
+  const doiUrl = getPublicationDoiUrl(pub.doi);
+  const publicationUrl = normalizeHttpUrl(pub.url);
+  const pdf = normalizeResearchAsset(pub.pdf);
+  const details = [pub.volume, pub.issue, pub.pages].filter(value => value && !isP(value));
+  const venue = [pub.venue, pub.year].filter(value => value && !isP(value));
+  const authors = pub.authors && !isP(pub.authors) ? String(pub.authors).trim() : '';
+  const actions = [
+    doiUrl ? `<a href="${esc(doiUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">DOI</a>` : '',
+    publicationUrl ? `<a href="${esc(publicationUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Publikasi</a>` : '',
+    pdf ? `<a href="${esc(pdf)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">PDF</a>` : '',
+  ].filter(Boolean);
+
+  return `<div class="pub-card" data-research-category="publications" data-research-idx="${idx}">
+    ${renderThumbnail(normalizeResearchAsset(pub.poster) || normalizeResearchAsset(pub.photos?.[0]), pdf, {
+      containerClass: 'pub-card-cover',
+      placeholderClass: 'pub-card-placeholder',
+      placeholder: '📄',
+      alt: pub.title || 'Publikasi',
+    })}
+    ${pub.title && !isP(pub.title) ? `<div class="pub-title">${esc(pub.title)}</div>` : ''}
+    ${venue.length ? `<div class="pub-venue">${venue.map(esc).join(' · ')}</div>` : ''}
+    ${authors ? `<div class="pub-authors">${esc(authors)}</div>` : ''}
+    ${details.length ? `<div class="pub-authors">${details.map(esc).join(' · ')}</div>` : ''}
+    ${pub.abstract && !isP(pub.abstract) ? `<div class="pub-abstract">${esc(pub.abstract)}</div>` : ''}
+    ${actions.length ? `<div class="pub-actions">${actions.join('')}</div>` : ''}
+    <div class="pub-open-hint">Klik untuk detail →</div>
+  </div>`;
+}
+
+function renderConferenceCard(conference, idx) {
+  const proceedingsUrl = normalizeHttpUrl(conference.proceedings_url);
+  const meta = [
+    conference.organizer,
+    conference.date,
+    conference.presentation_type,
+  ].filter(value => value && !isP(value));
+  return `<div class="pub-card" data-research-category="conferences" data-research-idx="${idx}">
+    ${renderThumbnail(normalizeResearchAsset(conference.photos?.[0]), '', {
+      containerClass: 'pub-card-cover',
+      placeholderClass: 'pub-card-placeholder',
+      placeholder: '🎤',
+      alt: conference.conference_name || 'Dokumentasi konferensi',
+      lightbox: false,
+    })}
+    <div class="research-category-label">Konferensi</div>
+    ${conference.article_title && !isP(conference.article_title) ? `<div class="pub-title">${esc(conference.article_title)}</div>` : ''}
+    ${conference.conference_name && !isP(conference.conference_name) ? `<div class="pub-venue">${esc(conference.conference_name)}</div>` : ''}
+    ${meta.length ? `<div class="pub-authors">${meta.map(esc).join(' · ')}</div>` : ''}
+    ${proceedingsUrl ? `<div class="pub-actions"><a href="${esc(proceedingsUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Artikel / Prosiding</a></div>` : ''}
+    <div class="pub-open-hint">Klik untuk detail →</div>
+  </div>`;
+}
+
+function renderIntellectualPropertyCard(item, idx) {
+  const meta = [item.ip_type, item.year].filter(value => value && !isP(value));
+  return `<div class="pub-card" data-research-category="intellectual_properties" data-research-idx="${idx}">
+    ${renderThumbnail(normalizeResearchAsset(item.work_preview) || normalizeResearchAsset(item.certificate_image), '', {
+      containerClass: 'pub-card-cover',
+      placeholderClass: 'pub-card-placeholder',
+      placeholder: '©',
+      alt: item.title || 'Karya kekayaan intelektual',
+      lightbox: false,
+    })}
+    <div class="research-category-label">Kekayaan Intelektual</div>
+    ${item.title && !isP(item.title) ? `<div class="pub-title">${esc(item.title)}</div>` : ''}
+    ${meta.length ? `<div class="pub-venue">${meta.map(esc).join(' · ')}</div>` : ''}
+    ${item.registration_number && !isP(item.registration_number) ? `<div class="pub-authors">${esc(item.registration_number)}</div>` : ''}
+    <div class="pub-open-hint">Klik untuk detail →</div>
+  </div>`;
+}
+
+function renderResearchCards() {
+  const container = document.getElementById('pub-list');
+  if (!container) return;
+
+  const data = researchData[activeResearchCategory];
+  if (!data.length) {
+    const emptyLabels = {
+      publications: 'Belum ada data publikasi.',
+      conferences: 'Belum ada data konferensi.',
+      intellectual_properties: 'Belum ada data kekayaan intelektual.',
+    };
+    container.innerHTML = `<p class="loading-text">${emptyLabels[activeResearchCategory]}</p>`;
+    return;
+  }
+
+  const renderers = {
+    publications: renderPublicationCard,
+    conferences: renderConferenceCard,
+    intellectual_properties: renderIntellectualPropertyCard,
+  };
+  container.innerHTML = data.map(renderers[activeResearchCategory]).join('');
+  initMediaPreviews(container);
+}
 
 async function renderPublications() {
   const raw = await loadJSON('content/publications/publications.json');
   const container = document.getElementById('pub-list');
   if (!raw || !container) return;
-  const data = Array.isArray(raw) ? raw : (raw.publications || []);
-  allPubs = data;
+  researchData.publications = Array.isArray(raw) ? raw : (raw.publications || []);
+  researchData.conferences = Array.isArray(raw.conferences) ? raw.conferences : [];
+  researchData.intellectual_properties = Array.isArray(raw.intellectual_properties)
+    ? raw.intellectual_properties
+    : [];
+  activeResearchCategory = 'publications';
+  renderResearchCards();
 
-  container.innerHTML = data.map((pub, idx) => `
-    <div class="pub-card" data-pub-idx="${idx}">
-      ${renderThumbnail(pub.poster || pub.photos?.[0], pub.pdf, {
-        containerClass: 'pub-card-cover',
-        placeholderClass: 'pub-card-placeholder',
-        placeholder: '📄',
-        alt: pub.title || 'Poster publikasi',
-      })}
-      <div class="pub-title">${ph(pub.title)}</div>
-      <div class="pub-authors">${ph(pub.authors)}</div>
-      <div class="pub-venue">
-        ${isP(pub.venue) ? ph(pub.venue) : esc(pub.venue || '')}
-        ${pub.year && !isP(pub.year) ? ` · ${esc(pub.year)}` : ''}
-      </div>
-      ${pub.abstract && !isP(pub.abstract) ? `<div class="pub-abstract">${esc(pub.abstract)}</div>` : ''}
-      <div class="pub-actions">
-        ${pub.doi && !isP(pub.doi) ? `<a href="https://doi.org/${encodeURIComponent(pub.doi)}" target="_blank" rel="noopener" class="btn btn-sm">DOI</a>` : ''}
-        ${pub.url && !isP(pub.url) ? `<a href="${esc(pub.url)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Publikasi</a>` : ''}
-        ${pub.pdf && !isP(pub.pdf) ? `<a href="${esc(pub.pdf)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">PDF</a>` : ''}
-      </div>
-      <div class="pub-open-hint">Klik untuk detail →</div>
-    </div>`).join('');
-  initMediaPreviews(container);
+  document.querySelectorAll('.research-tab[data-research-category]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      activeResearchCategory = tab.dataset.researchCategory;
+      document.querySelectorAll('.research-tab[data-research-category]').forEach(button => {
+        const selected = button === tab;
+        button.classList.toggle('active', selected);
+        button.setAttribute('aria-selected', String(selected));
+      });
+      document.getElementById('pub-list')?.setAttribute('aria-labelledby', tab.id);
+      renderResearchCards();
+    });
+  });
 
   container.addEventListener('click', e => {
-    const card = e.target.closest('[data-pub-idx]');
-    if (card && !e.target.closest('a, [data-lightbox-src]')) openPubModal(+card.dataset.pubIdx);
+    const card = e.target.closest('[data-research-idx]');
+    if (card && !e.target.closest('a, [data-lightbox-src]')) {
+      openResearchModal(card.dataset.researchCategory, Number(card.dataset.researchIdx));
+    }
   });
 }
 
-function openPubModal(idx) {
-  const pub = allPubs[idx];
-  if (!pub) return;
+function renderPublicationPdfView(pdf) {
+  const url = normalizeResearchAsset(pdf);
+  if (!url) return '';
+  return `<div class="modal-section publication-pdf-section">
+    <div class="modal-section-label">Preview PDF Publikasi</div>
+    <div class="publication-pdf-viewer" data-publication-pdf="${esc(url)}" role="region" aria-label="Preview PDF publikasi">
+      <div class="publication-pdf-status" role="status">Memuat preview PDF…</div>
+      <div class="publication-pdf-pages"></div>
+    </div>
+  </div>`;
+}
 
-  const ytId = pub.youtube && !isP(pub.youtube) ? extractYtId(pub.youtube) : null;
-  const embedHtml = ytId
-    ? `<div class="modal-section"><div class="modal-section-label">Video</div><div class="modal-embed"><iframe src="https://www.youtube.com/embed/${ytId}" allowfullscreen title="Video penelitian"></iframe></div></div>`
-    : '';
+async function loadPublicationPdfViewer(viewer) {
+  const status = viewer.querySelector('.publication-pdf-status');
+  const pagesContainer = viewer.querySelector('.publication-pdf-pages');
+  const pdfjs = window.pdfjsLib;
+  if (!status || !pagesContainer || !pdfjs) {
+    if (status) status.textContent = 'Preview PDF tidak tersedia.';
+    return;
+  }
 
-  const links = [
-    pub.doi && !isP(pub.doi) ? `<a href="https://doi.org/${encodeURIComponent(pub.doi)}" target="_blank" rel="noopener" class="btn btn-sm">DOI</a>` : '',
-    pub.url && !isP(pub.url) ? `<a href="${esc(pub.url)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Buka Publikasi</a>` : '',
-    pub.pdf && !isP(pub.pdf) ? `<a href="${esc(pub.pdf)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Unduh PDF</a>` : '',
-    pub.poster && !isP(pub.poster) ? `<a href="${esc(pub.poster)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Lihat Poster</a>` : '',
-  ].filter(Boolean);
+  try {
+    const url = new URL(viewer.dataset.publicationPdf, document.baseURI).href;
+    const task = pdfjs.getDocument({ url });
+    const pdf = await task.promise;
+    if (!viewer.isConnected) return;
 
-  openModal(`<div class="modal-inner">
-    <div class="modal-badge">Riset &amp; Publikasi</div>
-    <div class="modal-title">${ph(pub.title)}</div>
-    <div class="modal-subtitle">${ph(pub.authors)}</div>
-    <div class="modal-period">${isP(pub.venue) ? '' : esc(pub.venue)}${pub.year && !isP(pub.year) ? ` · ${esc(pub.year)}` : ''}</div>
-    ${pub.poster && !isP(pub.poster)
-      ? `<img class="publication-poster" src="${esc(pub.poster)}" alt="${esc(pub.title)}" data-lightbox-src="${esc(pub.poster)}">` : ''}
+    const pageNodes = [];
+    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+      const page = await pdf.getPage(pageNumber);
+      const baseViewport = page.getViewport({ scale: 1 });
+      const pageNode = document.createElement('div');
+      pageNode.className = 'publication-pdf-page';
+      pageNode.dataset.pageNumber = String(pageNumber);
+      pageNode.style.aspectRatio = `${baseViewport.width} / ${baseViewport.height}`;
+      pagesContainer.append(pageNode);
+      pageNodes.push(pageNode);
+      page.cleanup();
+    }
 
-    ${pub.abstract && !isP(pub.abstract)
-      ? `<div class="modal-section"><div class="modal-section-label">Abstrak</div><p class="modal-text">${esc(pub.abstract)}</p></div>` : ''}
-    ${pub.background && !isP(pub.background)
-      ? `<div class="modal-section"><div class="modal-section-label">Latar Belakang & Tujuan</div><p class="modal-text">${esc(pub.background)}</p></div>` : ''}
-    ${pub.methodology && !isP(pub.methodology)
-      ? `<div class="modal-section"><div class="modal-section-label">Metode Penelitian</div><p class="modal-text">${esc(pub.methodology)}</p></div>` : ''}
-    ${pub.results_summary && !isP(pub.results_summary)
-      ? `<div class="modal-section"><div class="modal-section-label">Ringkasan Hasil</div><p class="modal-text">${esc(pub.results_summary)}</p></div>` : ''}
-    ${links.length ? `<div class="modal-section"><div class="modal-section-label">Tautan</div><div class="modal-media-row">${links.join('')}</div></div>` : ''}
-    ${renderGallery(pub.photos)}
-    ${embedHtml}
-  </div>`);
+    status.textContent = `${pdf.numPages} halaman · Gulir untuk membaca`;
+    const renderPage = async pageNode => {
+      if (pageNode.dataset.renderState) return;
+      pageNode.dataset.renderState = 'loading';
+      try {
+        const page = await pdf.getPage(Number(pageNode.dataset.pageNumber));
+        const baseViewport = page.getViewport({ scale: 1 });
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        const scale = (viewer.clientWidth / baseViewport.width) * pixelRatio;
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        if (!context) throw new Error('Canvas 2D tidak tersedia');
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+        canvas.setAttribute('aria-label', `Halaman ${pageNode.dataset.pageNumber}`);
+        await page.render({ canvasContext: context, viewport }).promise;
+        if (viewer.isConnected) {
+          pageNode.replaceChildren(canvas);
+          pageNode.dataset.renderState = 'ready';
+        }
+        page.cleanup();
+      } catch (error) {
+        pageNode.dataset.renderState = 'error';
+        pageNode.textContent = `Halaman ${pageNode.dataset.pageNumber} gagal dimuat.`;
+        console.warn('Publication PDF page:', pageNode.dataset.pageNumber, error.message);
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          renderPage(entry.target);
+        });
+      }, { root: viewer, rootMargin: '300px' });
+      pageNodes.forEach(pageNode => observer.observe(pageNode));
+    } else {
+      pageNodes.forEach(renderPage);
+    }
+  } catch (error) {
+    console.warn('Publication PDF preview:', viewer.dataset.publicationPdf, error.message);
+    status.textContent = 'Preview PDF tidak dapat dimuat. Buka PDF secara penuh melalui tautan di atas.';
+  }
+}
+
+function openResearchModal(category, idx) {
+  const item = researchData[category]?.[idx];
+  if (!item) return;
+
+  let html = '';
+  if (category === 'publications') {
+    const doiUrl = getPublicationDoiUrl(item.doi);
+    const publicationUrl = normalizeHttpUrl(item.url);
+    const pdf = normalizeResearchAsset(item.pdf);
+    const poster = normalizeResearchAsset(item.poster);
+    const videoId = item.youtube && !isP(item.youtube) ? extractYtId(item.youtube) : null;
+    const links = [
+      doiUrl ? `<a href="${esc(doiUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm">DOI</a>` : '',
+      publicationUrl ? `<a href="${esc(publicationUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka Publikasi</a>` : '',
+      pdf ? `<a href="${esc(pdf)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka PDF secara penuh</a>` : '',
+    ].filter(Boolean);
+    const citation = [
+      item.venue,
+      item.year,
+      item.volume && !isP(item.volume) ? `Vol. ${item.volume}` : '',
+      item.issue && !isP(item.issue) ? `No. ${item.issue}` : '',
+      item.pages && !isP(item.pages) ? `hlm. ${item.pages}` : '',
+    ].filter(value => value && !isP(value)).map(esc).join(' · ');
+
+    html = `<div class="modal-inner">
+      <div class="modal-badge">Publikasi</div>
+      <div class="modal-title">${ph(item.title)}</div>
+      ${item.authors && !isP(item.authors) ? `<div class="modal-subtitle">${esc(item.authors)}</div>` : ''}
+      ${citation ? `<div class="modal-period">${citation}</div>` : ''}
+      ${poster ? renderResearchImage(poster, item.title || 'Cover publikasi', 'publication-poster') : ''}
+      ${item.abstract && !isP(item.abstract) ? `<div class="modal-section"><div class="modal-section-label">Abstrak / Deskripsi</div><p class="modal-text">${esc(item.abstract)}</p></div>` : ''}
+      ${item.background && !isP(item.background) ? `<div class="modal-section"><div class="modal-section-label">Latar Belakang &amp; Tujuan</div><p class="modal-text">${esc(item.background)}</p></div>` : ''}
+      ${item.methodology && !isP(item.methodology) ? `<div class="modal-section"><div class="modal-section-label">Metode Penelitian</div><p class="modal-text">${esc(item.methodology)}</p></div>` : ''}
+      ${item.results_summary && !isP(item.results_summary) ? `<div class="modal-section"><div class="modal-section-label">Ringkasan Hasil</div><p class="modal-text">${esc(item.results_summary)}</p></div>` : ''}
+      ${links.length ? `<div class="modal-section"><div class="modal-section-label">Tautan Publikasi</div><div class="modal-media-row">${links.join('')}</div></div>` : ''}
+      ${videoId ? `<div class="modal-section"><div class="modal-section-label">Video</div><div class="modal-embed"><iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen title="Video publikasi"></iframe></div></div>` : ''}
+      ${pdf ? renderPublicationPdfView(pdf) : ''}
+      ${renderGallery(item.photos)}
+    </div>`;
+  } else if (category === 'conferences') {
+    const proceedingsUrl = normalizeHttpUrl(item.proceedings_url);
+    html = `<div class="modal-inner">
+      <div class="modal-badge">Konferensi</div>
+      <div class="modal-title">${ph(item.article_title)}</div>
+      ${item.conference_name && !isP(item.conference_name) ? `<div class="modal-subtitle">${esc(item.conference_name)}</div>` : ''}
+      ${item.theme && !isP(item.theme) ? `<div class="modal-section"><div class="modal-section-label">Tema</div><p class="modal-text">${esc(item.theme)}</p></div>` : ''}
+      ${item.organizer && !isP(item.organizer) ? `<div class="modal-section"><div class="modal-section-label">Penyelenggara</div><p class="modal-text">${esc(item.organizer)}</p></div>` : ''}
+      ${item.date && !isP(item.date) ? `<div class="modal-section"><div class="modal-section-label">Tanggal Pelaksanaan</div><p class="modal-text">${esc(item.date)}</p></div>` : ''}
+      ${item.location && !isP(item.location) ? `<div class="modal-section"><div class="modal-section-label">Lokasi / Platform</div><p class="modal-text">${esc(item.location)}</p></div>` : ''}
+      ${item.presentation_type && !isP(item.presentation_type) ? `<div class="modal-section"><div class="modal-section-label">Jenis Presentasi</div><p class="modal-text">${esc(item.presentation_type)}</p></div>` : ''}
+      ${item.authors && !isP(item.authors) ? `<div class="modal-section"><div class="modal-section-label">Penulis</div><p class="modal-text">${esc(item.authors)}</p></div>` : ''}
+      ${item.description && !isP(item.description) ? `<div class="modal-section"><div class="modal-section-label">Abstrak / Deskripsi</div><p class="modal-text">${esc(item.description)}</p></div>` : ''}
+      ${proceedingsUrl ? `<div class="modal-section"><div class="modal-section-label">Artikel / Prosiding</div><a href="${esc(proceedingsUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline">Buka Artikel / Prosiding</a></div>` : ''}
+      ${renderResearchCertificate(item)}
+      ${renderGallery(item.photos)}
+    </div>`;
+  } else {
+    const workPreview = renderResearchImage(item.work_preview, 'Preview karya kekayaan intelektual', 'research-work-preview');
+    html = `<div class="modal-inner">
+      <div class="modal-badge">Kekayaan Intelektual (KI)</div>
+      <div class="modal-title">${ph(item.title)}</div>
+      ${item.ip_type && !isP(item.ip_type) ? `<div class="modal-subtitle">${esc(item.ip_type)}</div>` : ''}
+      ${item.registration_number && !isP(item.registration_number) ? `<div class="modal-section"><div class="modal-section-label">Nomor Pencatatan / Registrasi</div><p class="modal-text">${esc(item.registration_number)}</p></div>` : ''}
+      ${item.creators && !isP(item.creators) ? `<div class="modal-section"><div class="modal-section-label">Pencipta</div><p class="modal-text">${esc(item.creators)}</p></div>` : ''}
+      ${item.rights_holder && !isP(item.rights_holder) ? `<div class="modal-section"><div class="modal-section-label">Pemegang Hak</div><p class="modal-text">${esc(item.rights_holder)}</p></div>` : ''}
+      ${item.year && !isP(item.year) ? `<div class="modal-section"><div class="modal-section-label">Tahun</div><p class="modal-text">${esc(item.year)}</p></div>` : ''}
+      ${item.description && !isP(item.description) ? `<div class="modal-section"><div class="modal-section-label">Deskripsi</div><p class="modal-text">${esc(item.description)}</p></div>` : ''}
+      ${workPreview ? `<div class="modal-section"><div class="modal-section-label">Preview Karya</div>${workPreview}</div>` : ''}
+      ${renderResearchCertificate(item)}
+    </div>`;
+  }
+
+  openModal(html);
+  const pdfViewer = document.querySelector('#detail-modal-body [data-publication-pdf]');
+  if (pdfViewer) loadPublicationPdfViewer(pdfViewer);
 }
 
 /* ── CONTACT ─────────────────────────────────────────────── */

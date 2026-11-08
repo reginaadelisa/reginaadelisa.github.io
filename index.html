@@ -188,7 +188,15 @@
       <div class="section-divider"></div>
       <p class="section-subtitle">Karya akademik dan penelitian</p>
     </div>
-    <div class="pub-list" id="pub-list">
+    <div class="research-tabs" role="tablist" aria-label="Kategori riset dan publikasi">
+      <button class="research-tab active" id="research-tab-publications" type="button" role="tab"
+        aria-selected="true" aria-controls="pub-list" data-research-category="publications">Publikasi</button>
+      <button class="research-tab" id="research-tab-conferences" type="button" role="tab"
+        aria-selected="false" aria-controls="pub-list" data-research-category="conferences">Konferensi</button>
+      <button class="research-tab" id="research-tab-intellectual-properties" type="button" role="tab"
+        aria-selected="false" aria-controls="pub-list" data-research-category="intellectual_properties">Kekayaan Intelektual (KI)</button>
+    </div>
+    <div class="pub-list" id="pub-list" role="tabpanel" aria-labelledby="research-tab-publications" tabindex="0">
       <p class="loading-text">Memuat data publikasi…</p>
     </div>
   </div>
