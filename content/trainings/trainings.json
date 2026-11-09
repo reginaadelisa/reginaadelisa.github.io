@@ -1,6 +1,11 @@
 {
   "trainings": [
     {
+      "name": "Capstone Project PIDI DIGDAYA x Hackathon 2026",
+      "organizer": "PIDI",
+      "certificate_pdf": "assets/documents/Sertifikat Capstone Project PIDI DIGDAYA x Hackathon 2026_Regina Adelisa.pdf"
+    },
+    {
       "name": "Data - AI Agent for Data Analysis",
       "organizer": "Hacktiv8 Indonesia",
       "period_start": "Oktober 2026",
@@ -79,6 +84,11 @@
       "name": "Prompt Engineering untuk Software Developer",
       "organizer": "Dicoding",
       "certificate_pdf": "assets/documents/Prompt Engineering untuk Software Developer.pdf"
+    },
+    {
+      "name": "IT - AI Agent for Programming",
+      "organizer": "Hactiv8",
+      "certificate_pdf": "assets/documents/IT - AI Agent for Programming.pdf"
     }
   ]
 }
