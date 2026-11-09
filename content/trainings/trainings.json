@@ -6,6 +6,79 @@
       "period_start": "Oktober 2026",
       "period_end": "Oktober 2026",
       "certificate_pdf": "assets/documents/Sertifikat Hacktiv8 Data.pdf"
+    },
+    {
+      "name": "Intro to Data Analytics",
+      "organizer": "RevoU",
+      "certificate_pdf": "assets/documents/Sertifikat RevoU Intro to Data Analytics_Regina Adelisa.pdf"
+    },
+    {
+      "name": "Power BI",
+      "organizer": "Hacktiv8",
+      "certificate_pdf": "assets/documents/Sertifikat Hacktiv8 Power BI_Regina Adelisa.pdf"
+    },
+    {
+      "name": "Belajar Analisis Data untuk Pemula",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Analisis Data untuk Pemula.pdf"
+    },
+    {
+      "name": "Belajar Dasar AI",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar AI.pdf"
+    },
+    {
+      "name": "Belajar Dasar Data Science",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar Data Science.pdf"
+    },
+    {
+      "name": "Belajar Dasar Google Cloud",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar Google Cloud.pdf"
+    },
+    {
+      "name": "Belajar Dasar Manajemen Proyek",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar Manajemen Proyek.pdf"
+    },
+    {
+      "name": "Belajar Dasar SQL",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar Structured Query Language (SQL).pdf"
+    },
+    {
+      "name": "Belajar Dasar UX Design",
+      "certificate_pdf": "assets/documents/Belajar Dasar UX Design.pdf"
+    },
+    {
+      "name": "Belajar Dasar Visualisasi Data",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Dasar Visualisasi Data.pdf"
+    },
+    {
+      "name": "Belajar Fundamental Analisis Data",
+      "certificate_pdf": "assets/documents/Belajar Fundamental Analisis Data.pdf"
+    },
+    {
+      "name": "Belajar Fundamental Deep Learning",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Fundamental Deep Learning.pdf"
+    },
+    {
+      "name": "Belajar Machine Learning Untuk Pemula",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Belajar Machine Learning untuk Pemula.pdf"
+    },
+    {
+      "name": "Memulai Pemrograman dengan Python",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Memulai Pemrograman dengan Python.pdf"
+    },
+    {
+      "name": "Prompt Engineering untuk Software Developer",
+      "organizer": "Dicoding",
+      "certificate_pdf": "assets/documents/Prompt Engineering untuk Software Developer.pdf"
     }
   ]
 }
