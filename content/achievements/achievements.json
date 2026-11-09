@@ -5,35 +5,46 @@
       "organizer": "Bank Indonesia",
       "year": "2026",
       "achievement": "Finalis Top 40 Mahasiswa",
-      "description": "Tergabung dalam tim Octo Bridge sebagai Data Analyst dan Researcher dalam pengembangan GitHire, platform yang membantu entry-level developer mengubah CV dan proyek GitHub menjadi portofolio yang relevan dengan peluang kerja. Melakukan riset permasalahan dan kebutuhan pengguna, khususnya mahasiswa tingkat akhir dan fresh graduate IT, serta mengumpulkan, mengolah, dan menganalisis data lowongan kerja untuk memahami kebutuhan kompetensi di pasar kerja. Hasil analisis digunakan untuk mendukung pengembangan fitur job matching, skill gap analysis, dan penyusunan portofolio berbasis kompetensi. Melalui proyek ini, tim Octo Bridge berhasil terpilih sebagai salah satu dari 40 tim mahasiswa terbaik dalam PIDI DIGDAYA x Hackathon 2026, yang memilih 80 tim finalis dari 2.094 proposal inovasi, terdiri atas 40 tim mahasiswa dan 40 tim profesional."
+      "description": "Tergabung dalam tim Octo Bridge sebagai Data Analyst dan Researcher dalam pengembangan GitHire, platform yang membantu entry-level developer mengubah CV dan proyek GitHub menjadi portofolio yang relevan dengan peluang kerja. Melakukan riset permasalahan dan kebutuhan pengguna, khususnya mahasiswa tingkat akhir dan fresh graduate IT, serta mengumpulkan, mengolah, dan menganalisis data lowongan kerja untuk memahami kebutuhan kompetensi di pasar kerja. Hasil analisis digunakan untuk mendukung pengembangan fitur job matching, skill gap analysis, dan penyusunan portofolio berbasis kompetensi. Melalui proyek ini, tim Octo Bridge berhasil terpilih sebagai salah satu dari 40 tim mahasiswa terbaik dalam PIDI DIGDAYA x Hackathon 2026, yang memilih 80 tim finalis dari 2.094 proposal inovasi, terdiri atas 40 tim mahasiswa dan 40 tim profesional.",
+      "cover_image": "assets/images/achievements/foto hackathon.jpg",
+      "photos": [
+        "assets/images/achievements/hackathon 1.jpg",
+        "assets/images/achievements/hackathon 2.jpg"
+      ]
     },
     {
       "title": "Perlombaan Analisis Data untuk Pembangunan Provinsi Bengkulu (PENDAP)",
       "organizer": "BPS Provinsi Bengkulu dan Pemerintah Provinsi Bengkulu",
       "year": "2025",
       "achievement": "Juaran Harapan 1",
-      "description": "Berperan sebagai ketua tim dalam Perlombaan Analisis Data untuk Pembangunan Provinsi Bengkulu (PENDAP) 2025 Tingkat Nasional melalui karya berjudul “Analisis Strategi Kebijakan Efektif untuk Mengatasi Stunting Multidimensi dengan Metode Biplot di Provinsi Bengkulu”. Bertanggung jawab mengoordinasikan seluruh tahapan analisis, mulai dari identifikasi permasalahan, pengumpulan dan pengolahan data menggunakan bahasa pemrograman R dan Python, pemilihan serta penerapan metode Biplot, hingga interpretasi hasil. Analisis dilakukan terhadap berbagai dimensi stunting untuk mengidentifikasi karakteristik wilayah dan merumuskan rekomendasi strategi kebijakan yang efektif. \n\nSelain mengoordinasikan penyusunan karya tulis ilmiah, memimpin presentasi hasil analisis di hadapan dewan juri yang merupakan perwakilan instansi pemerintahan Provinsi Bengkulu. Kompetisi ini berhasil meraih Juara Harapan 1 tingkat nasional, dan karya tersebut dipublikasikan dalam JSDS: Journal of Statistics and Data Science."
+      "description": "Berperan sebagai ketua tim dalam Perlombaan Analisis Data untuk Pembangunan Provinsi Bengkulu (PENDAP) 2025 Tingkat Nasional melalui karya berjudul “Analisis Strategi Kebijakan Efektif untuk Mengatasi Stunting Multidimensi dengan Metode Biplot di Provinsi Bengkulu”. Bertanggung jawab mengoordinasikan seluruh tahapan analisis, mulai dari identifikasi permasalahan, pengumpulan dan pengolahan data menggunakan bahasa pemrograman R dan Python, pemilihan serta penerapan metode Biplot, hingga interpretasi hasil. Analisis dilakukan terhadap berbagai dimensi stunting untuk mengidentifikasi karakteristik wilayah dan merumuskan rekomendasi strategi kebijakan yang efektif. \n\nSelain mengoordinasikan penyusunan karya tulis ilmiah, memimpin presentasi hasil analisis di hadapan dewan juri yang merupakan perwakilan instansi pemerintahan Provinsi Bengkulu. Kompetisi ini berhasil meraih Juara Harapan 1 tingkat nasional, dan karya tersebut dipublikasikan dalam JSDS: Journal of Statistics and Data Science.",
+      "cover_image": "assets/images/achievements/foto pendap.jpg",
+      "certificate": "assets/documents/Harapan 1 PENDAP 2025.pdf"
     },
     {
       "title": "Mathematics Championship XXIX",
       "organizer": "HIMATIKA UNIB",
       "year": "2025",
       "achievement": "Juara 3",
-      "description": "Menulis esai berjudul “Board Game Logic Quest: Inovasi Pembelajaran untuk Menghidupkan Logika Matematika dan Meningkatkan Kemampuan Numerasi” yang mengangkat inovasi pemanfaatan board game sebagai media pembelajaran matematika. Mengembangkan konsep permainan edukatif berdasarkan kajian mengenai pentingnya logika matematika dan numerasi dalam pendidikan, dengan tujuan menciptakan pengalaman belajar yang lebih interaktif dan menyenangkan bagi siswa. Esai disusun melalui pengembangan gagasan, argumentasi, serta didukung oleh referensi yang relevan dalam bidang pendidikan matematika. Meraih Juara 3 Lomba Esai Tingkat Nasional pada Mathematics Championship XXIX."
+      "description": "Menulis esai berjudul “Board Game Logic Quest: Inovasi Pembelajaran untuk Menghidupkan Logika Matematika dan Meningkatkan Kemampuan Numerasi” yang mengangkat inovasi pemanfaatan board game sebagai media pembelajaran matematika. Mengembangkan konsep permainan edukatif berdasarkan kajian mengenai pentingnya logika matematika dan numerasi dalam pendidikan, dengan tujuan menciptakan pengalaman belajar yang lebih interaktif dan menyenangkan bagi siswa. Esai disusun melalui pengembangan gagasan, argumentasi, serta didukung oleh referensi yang relevan dalam bidang pendidikan matematika. Meraih Juara 3 Lomba Esai Tingkat Nasional pada Mathematics Championship XXIX.",
+      "cover_image": "assets/images/achievements/foto essai.jpg",
+      "certificate": "assets/documents/essay mtk.pdf"
     },
     {
       "title": "Lomba Video Kreatif Statistics Fair",
       "organizer": "HIMASTA UNIB",
       "year": "2024",
       "achievement": "Juara Favorit",
-      "description": "Berperan sebagai ketua tim dalam Lomba Video Kreatif Tingkat Nasional pada ajang Statistics Fair yang diselenggarakan oleh HIMASTA Universitas Bengkulu. Menginisiasi konsep dan mengoordinasikan proses pembuatan video bertema “Perkembangan Ekonomi Digital di Indonesia Pasca Pandemi COVID-19”, mulai dari pengembangan ide, penyusunan materi, pembagian tugas, hingga produksi video. Mengemas informasi mengenai perkembangan ekonomi digital ke dalam konten audiovisual yang informatif dan kreatif. Berhasil meraih penghargaan Juara Favorit melalui karya tersebut."
+      "description": "Berperan sebagai ketua tim dalam Lomba Video Kreatif Tingkat Nasional pada ajang Statistics Fair yang diselenggarakan oleh HIMASTA Universitas Bengkulu. Menginisiasi konsep dan mengoordinasikan proses pembuatan video bertema “Perkembangan Ekonomi Digital di Indonesia Pasca Pandemi COVID-19”, mulai dari pengembangan ide, penyusunan materi, pembagian tugas, hingga produksi video. Mengemas informasi mengenai perkembangan ekonomi digital ke dalam konten audiovisual yang informatif dan kreatif. Berhasil meraih penghargaan Juara Favorit melalui karya tersebut.",
+      "cover_image": "assets/images/achievements/foto video.jpg"
     },
     {
       "title": "Cerdas Cermat Statistika",
       "organizer": "HIMASTA UNIB",
       "year": "2024",
       "achievement": "Juara 1",
-      "description": "Mewakili Angkatan 2022 Program Studi Statistika Universitas Bengkulu dalam Lomba Cerdas Cermat Pekan Statistika dan berkompetisi melawan perwakilan dari seluruh angkatan di Program Studi Statistika Universitas Bengkulu. Kompetisi menguji kemampuan dalam konsep dan pengetahuan statistika serta pengetahuan umum, yang membutuhkan ketepatan dalam memahami konsep, kecepatan berpikir, dan ketelitian dalam menjawab pertanyaan. Berhasil meraih Juara 1 sebagai perwakilan Angkatan 2022."
+      "description": "Mewakili Angkatan 2022 Program Studi Statistika Universitas Bengkulu dalam Lomba Cerdas Cermat Pekan Statistika dan berkompetisi melawan perwakilan dari seluruh angkatan di Program Studi Statistika Universitas Bengkulu. Kompetisi menguji kemampuan dalam konsep dan pengetahuan statistika serta pengetahuan umum, yang membutuhkan ketepatan dalam memahami konsep, kecepatan berpikir, dan ketelitian dalam menjawab pertanyaan. Berhasil meraih Juara 1 sebagai perwakilan Angkatan 2022.",
+      "cover_image": "assets/images/achievements/foto cerdas cermat.jpg"
     }
   ]
 }
