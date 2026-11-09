@@ -4,9 +4,7 @@
       "title": "GWNR: Pemodelan Geographically Weighted Nonparametric Regression dengan Pendekatan Penalized Spline pada Kemiskinan Wilayah Sumatra Tahun 2024",
       "category": "Statistical Modeling",
       "description": "Penelitian pemodelan spasial menggunakan metode GWNR dengan pendekatan Penalized Spline untuk menganalisis faktor kemiskinan di wilayah Sumatra.",
-      "background": "Kemiskinan di Sumatra bersifat spasial — faktor penyebabnya berbeda antar wilayah. Penelitian ini bertujuan memodelkan kemiskinan secara lokal dengan mempertimbangkan heterogenitas spasial.",
       "methodology": "Menggunakan metode Geographically Weighted Nonparametric Regression (GWNR) dengan pendekatan Penalized Spline. Data dianalisis menggunakan software R.",
-      "results": "[Hasil penelitian — isi melalui Pages CMS]",
       "tools": [
         "R",
         "Statistika Spasial",
@@ -31,6 +29,24 @@
       ],
       "role": "[Peran — isi melalui Pages CMS]",
       "status": "Selesai"
+    },
+    {
+      "title": "Dashboard PDRB",
+      "media": {
+        "external": "https://sites.google.com/view/pdrbprovinsibengkulu2020-2024"
+      }
+    },
+    {
+      "title": "Infografis Kelistrikan",
+      "photos": [
+        "assets/images/projects/Infografis Kelistrikan.png"
+      ]
+    },
+    {
+      "title": "Infografis Kampung Melayu",
+      "photos": [
+        "assets/images/projects/SIG KAMPUNG MELAYU.png"
+      ]
     }
   ]
 }
